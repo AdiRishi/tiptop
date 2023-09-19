@@ -1,0 +1,18 @@
+import { PlopTypes } from '@turbo/gen';
+import { addCustomActions } from '{{ customActionPath }}';
+import { addCustomHelpers } from '{{ customHelperPath }}';
+
+export default function generator(plop: PlopTypes.NodePlopAPI): void {
+  addCustomActions(plop);
+  addCustomHelpers(plop);
+
+  plop.setGenerator('empty-generator', {
+    description: 'Create a new empty generator at any path in the project',
+    prompts: [],
+    actions: function (data) {
+      void data;
+      const actions: PlopTypes.ActionType[] = [];
+      return actions;
+    },
+  });
+}

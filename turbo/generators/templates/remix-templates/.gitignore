@@ -1,0 +1,10 @@
+node_modules
+
+/.cache
+/functions/\[\[path\]\].js
+/functions/\[\[path\]\].js.map
+/functions/metafile.*.json
+/public/build
+.dev.vars
+
+tsconfig.tsbuildinfo

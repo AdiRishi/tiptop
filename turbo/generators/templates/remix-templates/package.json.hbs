@@ -1,0 +1,35 @@
+{
+  "name": "{{ appName }}",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "build": "remix build --sourcemap",
+    "dev": "remix dev --manual -c \"yarn run preview\"",
+    "preview": "wrangler pages dev --compatibility-date=2023-09-14 ./public --port=3050",
+    "typecheck": "tsc --incremental",
+    "lint": "eslint . --ext .ts,.cjs,.mjs,.tsx,.jsx --fix"
+  },
+  "dependencies": {
+    "@cloudflare/pages-plugin-sentry": "^1.1.1",
+    "@remix-run/cloudflare": "^2.0.0",
+    "@remix-run/cloudflare-pages": "^2.0.0",
+    "@remix-run/css-bundle": "^2.0.0",
+    "@remix-run/react": "^2.0.0",
+    "@sentry/remix": "^7.69.0",
+    "isbot": "^3.6.13",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230914.0",
+    "@remix-run/dev": "^2.0.0",
+    "@remix-run/eslint-config": "^2.0.0",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "eslint": "^8.49.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.8.0"
+  }
+}
