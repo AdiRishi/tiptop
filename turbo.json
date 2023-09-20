@@ -2,14 +2,35 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
+    "typecheck": {
+      "outputs": []
     },
-    "lint": {},
+    "build": {
+      "dependsOn": ["^build", "typecheck"],
+      "env": ["NITRO_PRESET"]
+    },
+    "preview": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "outputs": []
+    },
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "outputs": []
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:e2e": {
+      "outputs": ["playwright-report/**"]
     }
-  }
+  },
+  "remoteCache": { "signature": true }
 }
