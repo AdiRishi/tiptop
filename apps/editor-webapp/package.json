@@ -17,9 +17,14 @@
     "@remix-run/css-bundle": "^2.0.1",
     "@remix-run/react": "^2.0.1",
     "@sentry/remix": "^7.70.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
     "isbot": "^3.7.0",
+    "lucide-react": "^0.279.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230914.0",
