@@ -3,19 +3,20 @@
   "packageManager": "pnpm@8.7.6",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "typecheck": "turbo run typecheck",
+    "build": "dotenv -- turbo run build",
+    "dev": "dotenv -- turbo run dev",
+    "lint": "dotenv -- turbo run lint",
+    "test": "dotenv -- turbo run test",
+    "typecheck": "dotenv --turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "gen": "turbo gen"
+    "gen": "dotenv -- turbo gen"
   },
   "devDependencies": {
     "@turbo/gen": "^1.10.14",
+    "dotenv-cli": "^7.3.0",
+    "eslint-config-tiptop-base": "workspace:*",
     "prettier": "^3.0.3",
     "tsconfig": "workspace:*",
-    "eslint-config-tiptop-base": "workspace:*",
     "turbo": "^1.10.14"
   }
 }
