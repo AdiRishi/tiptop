@@ -11,9 +11,9 @@
   },
   "devDependencies": {
     "@turbo/gen": "^1.10.14",
-    "eslint": "^8.49.0",
     "prettier": "^3.0.3",
     "tsconfig": "workspace:*",
-    "turbo": "latest"
+    "eslint-config-tiptop-base": "workspace:*",
+    "turbo": "^1.10.14"
   }
 }

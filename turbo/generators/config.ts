@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import path from 'path';
 import { PlopTypes } from '@turbo/gen';
 import { addCustomActions } from './customActions';
@@ -191,7 +193,7 @@ export default function generator(plop: PlopTypes.NodePlopAPI): void {
         {
           type: 'add',
           path: '{{ turbo.paths.workspace }}/apps/{{ dashCase appName }}/.eslintrc.js',
-          templateFile: 'templates/remix-templates/.eslintrc.js',
+          templateFile: 'templates/remix-templates/.eslintrc.js.hbs',
         },
         {
           type: 'add',

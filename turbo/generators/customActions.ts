@@ -37,7 +37,7 @@ const defaultPlopHelpers = [
 
 export function addCustomActions(plop: PlopTypes.NodePlopAPI) {
   plop.setActionType('createDir', async function (ans, cfg) {
-    for (const helper in plop.getHelperList()) {
+    for (const helper of plop.getHelperList()) {
       handlebars.registerHelper(
         helper,
         plop.getHelper(helper) as unknown as handlebars.HelperDelegate

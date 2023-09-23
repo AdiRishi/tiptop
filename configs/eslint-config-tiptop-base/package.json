@@ -1,0 +1,25 @@
+{
+  "name": "eslint-config-tiptop-base",
+  "version": "0.0.0",
+  "description": "A base ESLint configuration for tiptop",
+  "private": true,
+  "main": "index.js",
+  "type": "commonjs",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "prettier --check ."
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.2",
+    "@typescript-eslint/parser": "^6.7.2",
+    "eslint": "^8.49.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}
