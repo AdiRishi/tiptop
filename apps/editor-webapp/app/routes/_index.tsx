@@ -1,4 +1,3 @@
-{{{{raw-helper}}}}
 import type { MetaFunction } from '@remix-run/cloudflare';
 
 export const meta: MetaFunction = () => {
@@ -29,4 +28,3 @@ export default function Index() {
     </div>
   );
 }
-{{{{/raw-helper}}}}
