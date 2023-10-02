@@ -1,5 +1,6 @@
 import type { MetaFunction } from '@remix-run/cloudflare';
 import { Undo } from 'lucide-react';
+import DocumentEditor from '~/components/document-editor';
 import { Navbar } from '~/components/navbar';
 
 export const meta: MetaFunction = () => {
@@ -23,7 +24,9 @@ export default function Index() {
           </div>
           <div id="file-explorer">Files</div>
         </div>
-        <div className="w-3/4">rightbar</div>
+        <div className="w-3/4">
+          <DocumentEditor />
+        </div>
       </main>
     </>
   );
