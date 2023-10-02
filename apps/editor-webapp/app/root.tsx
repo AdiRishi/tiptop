@@ -3,6 +3,7 @@ import { cssBundleHref } from '@remix-run/css-bundle';
 import tailwindStyles from './tailwind.css';
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import { withSentry } from '@sentry/remix';
+import { ThemeProvider } from './components/ui/theme-provider';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: tailwindStyles },
@@ -19,7 +20,9 @@ const App = function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <ThemeProvider defaultTheme="system">
+          <Outlet />
+        </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

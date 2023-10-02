@@ -17,6 +17,7 @@ export default async function handleRequest(
   loadContext: AppLoadContext
 ) {
   const body = await renderToReadableStream(
+    // @ts-expect-error - https://github.com/remix-run/remix/issues/7514
     <RemixServer context={remixContext} url={request.url} />,
     {
       signal: request.signal,
