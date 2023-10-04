@@ -20,7 +20,7 @@ const App = function App() {
         <Links />
       </head>
       <body>
-        <ThemeProvider defaultTheme="dark">
+        <ThemeProvider defaultTheme="light">
           <Outlet />
         </ThemeProvider>
         <ScrollRestoration />
