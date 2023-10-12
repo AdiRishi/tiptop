@@ -1,4 +1,4 @@
-import type { QueryResolvers } from './../../../types.generated';
+import type { QueryResolvers } from '../../../types.generated';
 export const assetById: NonNullable<QueryResolvers['assetById']> = (_parent, _arg, _ctx) => {
   return {
     id: '1',

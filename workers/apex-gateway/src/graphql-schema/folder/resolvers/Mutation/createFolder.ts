@@ -1,4 +1,4 @@
-import type { MutationResolvers } from './../../../types.generated';
+import type { MutationResolvers } from '../../../types.generated';
 export const createFolder: NonNullable<MutationResolvers['createFolder']> = (
   _parent,
   _arg,

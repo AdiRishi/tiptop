@@ -1,4 +1,4 @@
-import type { MetaFieldResolvers } from './../../types.generated';
+import type { MetaFieldResolvers } from '../../types.generated';
 export const MetaField: MetaFieldResolvers = {
   /* Implement MetaField resolver logic here */
 };

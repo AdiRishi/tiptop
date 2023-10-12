@@ -1,4 +1,4 @@
-import type { QueryResolvers } from './../../../types.generated';
+import type { QueryResolvers } from '../../../types.generated';
 export const folderById: NonNullable<QueryResolvers['folderById']> = (_parent, _arg, _ctx) => {
   return {
     id: '1',

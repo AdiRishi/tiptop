@@ -1,6 +1,6 @@
 import { createSchema, createYoga, YogaInitialContext } from 'graphql-yoga';
-import { typeDefs } from './schema/typeDefs.generated';
-import { resolvers } from './schema/resolvers.generated';
+import { typeDefs } from './graphql-schema/typeDefs.generated';
+import { resolvers } from './graphql-schema/resolvers.generated';
 
 export type Env = {
   ENVIRONMENT: 'development' | 'production';
