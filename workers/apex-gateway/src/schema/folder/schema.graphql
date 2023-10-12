@@ -1,0 +1,24 @@
+extend type Query {
+    folderById(id: ID!): Folder
+}
+
+extend type Mutation {
+    createFolder(input: CreateFolderInput!): Folder
+}
+
+type Folder {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+
+    name: String!
+    path: String!
+    parent: Folder
+    children: [Folder!]!
+    assets(assetType: AssetType): [Asset!]!
+}
+
+input CreateFolderInput {
+    parentId: ID
+    name: String!
+}

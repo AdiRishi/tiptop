@@ -1,0 +1,81 @@
+extend type Query {
+    assetById(id: ID!): Asset
+}
+
+interface Asset {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    guid: UUID!
+    folder: Folder!
+    type: AssetType!
+    metafields: [MetaField!]!
+    versionSlug: String!
+    isLatest: Boolean!
+}
+
+enum AssetType {
+    RICH_TEXT
+    VIDEO
+}
+
+type MetaField {
+    id: ID!
+    key: String!
+    valueType: MetaFieldValueType!
+    value: String
+
+    asset: Asset!
+}
+
+enum MetaFieldValueType {
+    TEXT
+    DATE
+}
+
+type VideoAsset implements Asset {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    guid: UUID!
+    folder: Folder!
+    type: AssetType!
+    metafields: [MetaField!]!
+    versionSlug: String!
+    isLatest: Boolean!
+
+    cfData: CfVideoData!
+}
+
+type CfVideoData {
+    uid: ID!
+    allowedOrigins: [String!]!
+}
+
+type RichTextAsset implements Asset {
+    id: ID!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    deletedAt: DateTime
+    guid: UUID!
+    folder: Folder!
+    type: AssetType!
+    metafields: [MetaField!]!
+    versionSlug: String!
+    isLatest: Boolean!
+
+    """
+    The name of the editor used to create this asset
+    Can be used to interpret the format of JSON in contentJson
+    """
+    editorName: String!
+
+    """
+    The JSON representation of the editor state
+    Editors serialize their content differently.
+    Refer to editorName to find out what editor was used to create this JSON.
+    """
+    contentJson: JSON!
+}
