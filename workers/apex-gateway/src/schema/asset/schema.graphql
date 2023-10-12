@@ -2,13 +2,30 @@ extend type Query {
     assetById(id: ID!): Asset
 }
 
+"""
+An asset is an abstracted object that represents some piece of data in this system.
+Assets have different types and versions.
+At any given time an asset can have only one "active" version which is the latest version
+"""
 interface Asset {
     id: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
     deletedAt: DateTime
+
+    """
+    This is a unique identifier that is most useful when sharing asset IDs externally (e.g. in a URL or to another service)
+    """
     guid: UUID!
+
+    """
+    All assets must belong to a folder
+    """
     folder: Folder!
+
+    """
+    Reveals the underlying type of this asset. Use this to determine which asset type to query for further details
+    """
     type: AssetType!
     metafields: [MetaField!]!
     versionSlug: String!
@@ -20,6 +37,12 @@ enum AssetType {
     VIDEO
 }
 
+"""
+Every asset can have "data" fields stored alongside it.
+Metafields can have multiple different types, e.g string, json, date, etc.
+- Each type must be serializable to a string
+- Metafields are queriable with high perforamnce (indexed)
+"""
 type MetaField {
     id: ID!
     key: String!

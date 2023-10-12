@@ -6,15 +6,33 @@ extend type Mutation {
     createFolder(input: CreateFolderInput!): Folder
 }
 
+"""
+A folder is the core unit of organization in the asset library.
+Folders can contain other folders and assets.
+"""
 type Folder {
     id: ID!
     createdAt: DateTime!
     updatedAt: DateTime!
 
+    """
+    A human readable name for the folder.
+    """
     name: String!
+
+    """
+    The path of the folder, relative to the root folder.
+    All paths begin with a slash.
+    """
     path: String!
+
     parent: Folder
     children: [Folder!]!
+
+    """
+    Useful for when you want to display a folder's contents in a tree view.
+    NOTE: The asset type is an interface and will not reveal details of the underling asset type
+    """
     assets(assetType: AssetType): [Asset!]!
 }
 

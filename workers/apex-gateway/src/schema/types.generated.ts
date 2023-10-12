@@ -24,14 +24,22 @@ export type Scalars = {
   UUID: { input: string; output: string };
 };
 
+/**
+ * An asset is an abstracted object that represents some piece of data in this system.
+ * Assets have different types and versions.
+ * At any given time an asset can have only one "active" version which is the latest version
+ */
 export type Asset = {
   createdAt: Scalars['DateTime']['output'];
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** All assets must belong to a folder */
   folder: Folder;
+  /** This is a unique identifier that is most useful when sharing asset IDs externally (e.g. in a URL or to another service) */
   guid: Scalars['UUID']['output'];
   id: Scalars['ID']['output'];
   isLatest: Scalars['Boolean']['output'];
   metafields: Array<MetaField>;
+  /** Reveals the underlying type of this asset. Use this to determine which asset type to query for further details */
   type: AssetType;
   updatedAt: Scalars['DateTime']['output'];
   versionSlug: Scalars['String']['output'];
@@ -50,22 +58,45 @@ export type CreateFolderInput = {
   parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
+/**
+ * A folder is the core unit of organization in the asset library.
+ * Folders can contain other folders and assets.
+ */
 export type Folder = {
   __typename?: 'Folder';
+  /**
+   * Useful for when you want to display a folder's contents in a tree view.
+   * NOTE: The asset type is an interface and will not reveal details of the underling asset type
+   */
   assets: Array<Asset>;
   children: Array<Folder>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
+  /** A human readable name for the folder. */
   name: Scalars['String']['output'];
   parent?: Maybe<Folder>;
+  /**
+   * The path of the folder, relative to the root folder.
+   * All paths begin with a slash.
+   */
   path: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
+/**
+ * A folder is the core unit of organization in the asset library.
+ * Folders can contain other folders and assets.
+ */
 export type FolderassetsArgs = {
   assetType?: InputMaybe<AssetType>;
 };
 
+/**
+ * Every asset can have "data" fields stored alongside it.
+ * Metafields can have multiple different types, e.g string, json, date, etc.
+ * - Each type must be serializable to a string
+ * - Metafields are queriable with high perforamnce (indexed)
+ */
 export type MetaField = {
   __typename?: 'MetaField';
   asset: Asset;
