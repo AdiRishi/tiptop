@@ -1,0 +1,335 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "id": "5ca0c715-d32a-46af-b1e1-a7ad5f0dc382",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "asset": {
+      "name": "asset",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "folder_id": {
+          "name": "folder_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "guid": {
+          "name": "guid",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "latest_version_id": {
+          "name": "latest_version_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_asset_guid": {
+          "name": "idx_asset_guid",
+          "columns": ["guid"],
+          "isUnique": false
+        },
+        "idx_asset_folder_id_type_deleted_at": {
+          "name": "idx_asset_folder_id_type_deleted_at",
+          "columns": ["folder_id", "type", "deleted_at"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "asset_folder_id_folder_id_fk": {
+          "name": "asset_folder_id_folder_id_fk",
+          "tableFrom": "asset",
+          "tableTo": "folder",
+          "columnsFrom": ["folder_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "asset_latest_version_id_asset_version_id_fk": {
+          "name": "asset_latest_version_id_asset_version_id_fk",
+          "tableFrom": "asset",
+          "tableTo": "asset_version",
+          "columnsFrom": ["latest_version_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "asset_version": {
+      "name": "asset_version",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "asset_id": {
+          "name": "asset_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "version_slug": {
+          "name": "version_slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_asset_version_asset_id_version_slug": {
+          "name": "idx_asset_version_asset_id_version_slug",
+          "columns": ["asset_id", "version_slug"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "asset_version_asset_id_asset_id_fk": {
+          "name": "asset_version_asset_id_asset_id_fk",
+          "tableFrom": "asset_version",
+          "tableTo": "asset",
+          "columnsFrom": ["asset_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "folder": {
+      "name": "folder",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "path": {
+          "name": "path",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_folder_path": {
+          "name": "idx_folder_path",
+          "columns": ["path"],
+          "isUnique": false
+        },
+        "idx_folder_parent_id": {
+          "name": "idx_folder_parent_id",
+          "columns": ["parent_id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "folder_parent_id_folder_id_fk": {
+          "name": "folder_parent_id_folder_id_fk",
+          "tableFrom": "folder",
+          "tableTo": "folder",
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "metafield": {
+      "name": "metafield",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc')"
+        },
+        "asset_version_id": {
+          "name": "asset_version_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "idx_metafield_asset_version_id_key": {
+          "name": "idx_metafield_asset_version_id_key",
+          "columns": ["asset_version_id", "key"],
+          "isUnique": false
+        },
+        "idx_metafield_key_value": {
+          "name": "idx_metafield_key_value",
+          "columns": ["key", "value"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "metafield_asset_version_id_asset_version_id_fk": {
+          "name": "metafield_asset_version_id_asset_version_id_fk",
+          "tableFrom": "metafield",
+          "tableTo": "asset_version",
+          "columnsFrom": ["asset_version_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
