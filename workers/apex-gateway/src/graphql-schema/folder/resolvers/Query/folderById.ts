@@ -1,7 +1,7 @@
 import {
   FolderNotFoundException,
   getFolderById as dbQueryGetFolderById,
-} from '../../../../db-queries/folder';
+} from '~/db-queries/folder';
 import type { QueryResolvers } from '../../../types.generated';
 
 export const folderById: NonNullable<QueryResolvers['folderById']> = async (_parent, arg, ctx) => {
@@ -15,7 +15,7 @@ export const folderById: NonNullable<QueryResolvers['folderById']> = async (_par
       updatedAt: folder.updatedAt,
       name: folder.name,
       path: folder.path,
-      parent: null,
+      parent: null, // Handle parent field resolution in Folder type resolver
       children: [],
       assets: [],
     };

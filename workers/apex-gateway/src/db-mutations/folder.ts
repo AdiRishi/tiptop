@@ -10,7 +10,7 @@ export async function createFolder(
 ): Promise<FolderSelectType> {
   const db = getDrizzleClient(env);
 
-  let folderPath = '/';
+  let folderPath = `/${folderData.name}`;
 
   if (folderData.parentId) {
     try {
