@@ -8,13 +8,13 @@ export const folderTable = sqliteTable(
     id: integer('id').notNull().primaryKey({ autoIncrement: true }),
     createdAt: dateTime('created_at').notNull().default(dateTimeDefaultSQL),
     updatedAt: dateTime('updated_at').notNull().default(dateTimeDefaultSQL),
-    parent_id: integer('parent_id').references((): AnySQLiteColumn => folderTable.id),
+    parentId: integer('parent_id').references((): AnySQLiteColumn => folderTable.id),
     name: text('name').notNull(),
     path: text('path').notNull(),
   },
   (table) => ({
     pathIdx: index('idx_folder_path').on(table.path),
-    parentIdIdx: index('idx_folder_parent_id').on(table.parent_id),
+    parentIdIdx: index('idx_folder_parent_id').on(table.parentId),
   })
 );
 export type FolderInsertType = InferInsertModel<typeof folderTable>;

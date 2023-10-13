@@ -21,4 +21,17 @@ export async function getFolderByPath(folderPath: string, env: Env): Promise<Fol
   return folder;
 }
 
+export async function getSubfoldersById(
+  parentFolderId: number,
+  env: Env
+): Promise<FolderSelectType[]> {
+  const db = getDrizzleClient(env);
+  const folders = await db
+    .select()
+    .from(folderTable)
+    .where(eq(folderTable.parentId, parentFolderId))
+    .all();
+  return folders;
+}
+
 export class FolderNotFoundException extends Error {}

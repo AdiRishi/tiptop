@@ -1,5 +1,8 @@
 import path from 'node:path';
-import { getFolderByPath as dbQueryGetFolderByPath } from '~/db-queries/folder';
+import {
+  getFolderByPath as dbQueryGetFolderByPath,
+  getSubfoldersById as dbQueryGetSubfoldersById,
+} from '~/db-queries/folder';
 import type { FolderResolvers } from '../../types.generated';
 
 export const Folder: FolderResolvers = {
@@ -25,5 +28,18 @@ export const Folder: FolderResolvers = {
     } else {
       return parent.parent;
     }
+  },
+  children: async (parent, _args, ctx) => {
+    const subfolders = await dbQueryGetSubfoldersById(parseInt(parent.id as string), ctx);
+    return subfolders.map((subfolder) => ({
+      id: subfolder.id,
+      createdAt: subfolder.createdAt,
+      updatedAt: subfolder.updatedAt,
+      name: subfolder.name,
+      path: subfolder.path,
+      parent: null,
+      children: [],
+      assets: [],
+    }));
   },
 };

@@ -69,6 +69,7 @@ export type Folder = {
    * NOTE: The asset type is an interface and will not reveal details of the underling asset type
    */
   assets: Array<Asset>;
+  /** Direct children of the folder. */
   children: Array<Folder>;
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];

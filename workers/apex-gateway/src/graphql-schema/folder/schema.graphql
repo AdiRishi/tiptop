@@ -27,6 +27,10 @@ type Folder {
     path: String!
 
     parent: Folder
+
+    """
+    Direct children of the folder.
+    """
     children: [Folder!]!
 
     """

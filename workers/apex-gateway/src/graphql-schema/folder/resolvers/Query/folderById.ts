@@ -16,7 +16,7 @@ export const folderById: NonNullable<QueryResolvers['folderById']> = async (_par
       name: folder.name,
       path: folder.path,
       parent: null, // Handle parent field resolution in Folder type resolver
-      children: [],
+      children: [], // Handle children field resolution in Folder type resolver
       assets: [],
     };
   } catch (error: unknown) {
