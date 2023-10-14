@@ -144,9 +144,14 @@ export type MutationcreateRichTextAssetArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  assetByGuid?: Maybe<Asset>;
   assetById?: Maybe<Asset>;
   folderById?: Maybe<Folder>;
   folderByPath?: Maybe<Folder>;
+};
+
+export type QueryassetByGuidArgs = {
+  guid: Scalars['UUID']['input'];
 };
 
 export type QueryassetByIdArgs = {
@@ -448,6 +453,12 @@ export type QueryResolvers<
   ContextType = GraphQLContext,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
+  assetByGuid?: Resolver<
+    Maybe<ResolversTypes['Asset']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryassetByGuidArgs, 'guid'>
+  >;
   assetById?: Resolver<
     Maybe<ResolversTypes['Asset']>,
     ParentType,

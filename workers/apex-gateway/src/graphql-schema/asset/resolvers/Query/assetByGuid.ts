@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 import {
-  getAssetById as dbQueryGetAssetById,
+  getAssetByGuid as dbQueryGetAssetByGuid,
   AssetNotFoundException,
   AssetVersionNotFoundException,
 } from '~/db-queries/asset';
@@ -10,9 +10,13 @@ import {
 } from '~/db-queries/folder';
 import type { QueryResolvers } from '../../../types.generated';
 
-export const assetById: NonNullable<QueryResolvers['assetById']> = async (_parent, arg, ctx) => {
+export const assetByGuid: NonNullable<QueryResolvers['assetByGuid']> = async (
+  _parent,
+  arg,
+  ctx
+) => {
   try {
-    const { asset, assetVersion } = await dbQueryGetAssetById(parseInt(arg.id), 'latest', ctx);
+    const { asset, assetVersion } = await dbQueryGetAssetByGuid(arg.guid, 'latest', ctx);
 
     try {
       const folder = await dbQueryGetFolderById(asset.folderId, ctx);

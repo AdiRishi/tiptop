@@ -1,5 +1,6 @@
 extend type Query {
     assetById(id: ID!): Asset
+    assetByGuid(guid: UUID!): Asset
 }
 
 extend type Mutation {
