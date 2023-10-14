@@ -9,7 +9,7 @@ export type Env = {
 };
 export type GraphQLContext = YogaInitialContext & Env & ExecutionContext;
 
-const graphqlServer = createYoga<Env & ExecutionContext>({
+export const graphqlServer = createYoga<Env & ExecutionContext>({
   schema: createSchema({ typeDefs, resolvers }),
 });
 

@@ -1,0 +1,15 @@
+name = "apex-gateway"
+main = "src/index.ts"
+compatibility_date = "2023-04-03"
+compatibility_flags = ["nodejs_compat"]
+usage_model = 'bundled'
+
+[vars]
+ENVIRONMENT = 'production'
+
+[[ d1_databases ]]
+binding = "__D1_BETA__DB"
+database_name = "tiptop-db"
+database_id = "b1009298-52b8-4d1d-80eb-59cd0c3ce649"
+migrations_table = "d1_migrations"
+migrations_dir = "d1_migrations"

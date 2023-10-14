@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBOREPO_REMOTE_CACHE_AUTH_SECRET }}
+  TURBO_REMOTE_CACHE_SIGNATURE_KEY: ${{ secrets.TURBOREPO_REMOTE_CACHE_SIGNATURE_KEY }}
+  TURBO_TEAM: 'team_tiptop'
+  TURBO_API: 'https://turborepo-remote-cache.arishi.workers.dev'
+  GITHUB_SHA: ${{ github.sha }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN}}
+  NODE_ENV: 'production'
+
+jobs:
+  check:
+    name: Check Monorepo
+    runs-on: ubuntu-latest
+    env:
+      NITRO_PRESET: node-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  publish_cf_workers:
+    name: Publish Cloudflare Workers
+    needs: [check]
+    runs-on: ubuntu-latest
+    # Only run on master as cloudflare/wrangler-action does not support preview deployments
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: yarn build --filter apex-gateway
+
+      - name: Deploy apex-gateway
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: 'workers/apex-gateway'
+          command: 'deploy'
+
+  publish_cf_pages:
+    name: Publish Cloudflare Pages
+    needs: [check]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: yarn build --filter editor-webapp
+
+      - name: Deploy editor-webapp
+        uses: cloudflare/wrangler-action@v3
+        with:
+          accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          workingDirectory: 'workers/apex-gateway'
+          command: 'pages deploy ./public --project-name=tiptop-editor-webapp'
