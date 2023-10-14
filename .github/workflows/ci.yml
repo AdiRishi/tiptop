@@ -20,8 +20,6 @@ jobs:
   check:
     name: Check Monorepo
     runs-on: ubuntu-latest
-    env:
-      NITRO_PRESET: node-server
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -32,6 +30,7 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm install
+      - run: echo "" > .env
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
