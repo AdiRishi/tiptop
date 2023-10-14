@@ -46,7 +46,7 @@ export const assetByGuid: NonNullable<QueryResolvers['assetByGuid']> = async (
         return {
           ...baseAsset,
           __typename: 'RichTextAsset',
-          contentJson: {},
+          editorState: {},
           editorName: '',
         };
       } else if (asset.type === 'VIDEO') {

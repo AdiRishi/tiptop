@@ -42,7 +42,7 @@ export const assetById: NonNullable<QueryResolvers['assetById']> = async (_paren
         return {
           ...baseAsset,
           __typename: 'RichTextAsset',
-          contentJson: {},
+          editorState: {},
           editorName: '',
         };
       } else if (asset.type === 'VIDEO') {

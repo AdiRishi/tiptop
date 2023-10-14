@@ -46,7 +46,7 @@ export const richTextAssetById: NonNullable<QueryResolvers['richTextAssetById']>
         isLatest: true,
         __typename: 'RichTextAsset',
         editorName: editorName,
-        contentJson: editorState,
+        editorState: editorState,
       };
     } catch (e: unknown) {
       if (e instanceof FolderNotFoundException) {

@@ -178,12 +178,6 @@ export type QueryrichTextAssetByIdArgs = {
 
 export type RichTextAsset = Asset & {
   __typename?: 'RichTextAsset';
-  /**
-   * The JSON representation of the editor state
-   * Editors serialize their content differently.
-   * Refer to editorName to find out what editor was used to create this JSON.
-   */
-  contentJson: Scalars['JSONObject']['output'];
   createdAt: Scalars['DateTime']['output'];
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   /**
@@ -191,6 +185,12 @@ export type RichTextAsset = Asset & {
    * Can be used to interpret the format of JSON in contentJson
    */
   editorName: Scalars['NonEmptyString']['output'];
+  /**
+   * The JSON representation of the editor state
+   * Editors serialize their content differently.
+   * Refer to editorName to find out what editor was used to create this JSON.
+   */
+  editorState: Scalars['JSONObject']['output'];
   folder: Folder;
   guid: Scalars['UUID']['output'];
   id: Scalars['ID']['output'];
@@ -505,10 +505,10 @@ export type RichTextAssetResolvers<
   ContextType = GraphQLContext,
   ParentType extends ResolversParentTypes['RichTextAsset'] = ResolversParentTypes['RichTextAsset'],
 > = {
-  contentJson?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   editorName?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  editorState?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
   folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;
   guid?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;

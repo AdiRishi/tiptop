@@ -1013,7 +1013,7 @@ export const typeDefs = {
             block: true,
             loc: { start: 2365, end: 2549 },
           },
-          name: { kind: 'Name', value: 'contentJson', loc: { start: 2552, end: 2563 } },
+          name: { kind: 'Name', value: 'editorState', loc: { start: 2552, end: 2563 } },
           arguments: [],
           type: {
             kind: 'NonNullType',

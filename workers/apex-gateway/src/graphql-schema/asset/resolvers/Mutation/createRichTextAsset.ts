@@ -38,7 +38,7 @@ export const createRichTextAsset: NonNullable<MutationResolvers['createRichTextA
   return {
     createdAt: asset.createdAt,
     deletedAt: asset.deletedAt,
-    contentJson: editorState,
+    editorState: editorState,
     editorName: editorName,
     folder: {
       id: folder.id,

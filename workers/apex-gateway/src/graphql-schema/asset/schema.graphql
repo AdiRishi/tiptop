@@ -112,7 +112,7 @@ type RichTextAsset implements Asset {
     Editors serialize their content differently.
     Refer to editorName to find out what editor was used to create this JSON.
     """
-    contentJson: JSONObject!
+    editorState: JSONObject!
 }
 
 input CreateRichTextAssetInput {
