@@ -1,6 +1,6 @@
 extend type Query {
     folderById(id: ID!): Folder
-    folderByPath(path: String!): Folder
+    folderByPath(path: NonEmptyString!): Folder
 }
 
 extend type Mutation {
@@ -19,13 +19,13 @@ type Folder {
     """
     A human readable name for the folder.
     """
-    name: String!
+    name: NonEmptyString!
 
     """
     The path of the folder, relative to the root folder.
     All paths begin with a slash.
     """
-    path: String!
+    path: NonEmptyString!
 
     parent: Folder
 
@@ -43,5 +43,5 @@ type Folder {
 
 input CreateFolderInput {
     parentId: ID
-    name: String!
+    name: NonEmptyString!
 }

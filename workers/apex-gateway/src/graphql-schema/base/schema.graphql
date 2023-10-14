@@ -4,3 +4,4 @@ type Mutation
 scalar DateTime
 scalar UUID
 scalar JSON
+scalar NonEmptyString

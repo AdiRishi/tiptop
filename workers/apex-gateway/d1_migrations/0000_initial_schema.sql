@@ -49,3 +49,7 @@ CREATE INDEX `idx_folder_path` ON `folder` (`path`);--> statement-breakpoint
 CREATE INDEX `idx_folder_parent_id` ON `folder` (`parent_id`);--> statement-breakpoint
 CREATE INDEX `idx_metafield_asset_version_id_key` ON `metafield` (`asset_version_id`,`key`);--> statement-breakpoint
 CREATE INDEX `idx_metafield_key_value` ON `metafield` (`key`,`value`);
+
+-- Create base folder structure
+INSERT INTO `folder` (`parent_id`, `name`, `path`) VALUES (null, 'root', '/');
+--> statement-breakpoint

@@ -9,7 +9,12 @@ import { folderById as Query_folderById } from './folder/resolvers/Query/folderB
 import { folderByPath as Query_folderByPath } from './folder/resolvers/Query/folderByPath';
 import { RichTextAsset } from './asset/resolvers/RichTextAsset';
 import { VideoAsset } from './asset/resolvers/VideoAsset';
-import { DateTimeResolver, JSONResolver, UUIDResolver } from 'graphql-scalars';
+import {
+  DateTimeResolver,
+  JSONResolver,
+  NonEmptyStringResolver,
+  UUIDResolver,
+} from 'graphql-scalars';
 export const resolvers: Resolvers = {
   Query: {
     assetById: Query_assetById,
@@ -25,5 +30,6 @@ export const resolvers: Resolvers = {
   VideoAsset: VideoAsset,
   DateTime: DateTimeResolver,
   JSON: JSONResolver,
+  NonEmptyString: NonEmptyStringResolver,
   UUID: UUIDResolver,
 };

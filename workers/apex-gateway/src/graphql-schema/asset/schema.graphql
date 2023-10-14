@@ -28,7 +28,7 @@ interface Asset {
     """
     type: AssetType!
     metafields: [MetaField!]!
-    versionSlug: String!
+    versionSlug: NonEmptyString!
     isLatest: Boolean!
 }
 
@@ -45,9 +45,9 @@ Metafields can have multiple different types, e.g string, json, date, etc.
 """
 type MetaField {
     id: ID!
-    key: String!
+    key: NonEmptyString!
     valueType: MetaFieldValueType!
-    value: String
+    value: NonEmptyString
 
     asset: Asset!
 }
@@ -66,7 +66,7 @@ type VideoAsset implements Asset {
     folder: Folder!
     type: AssetType!
     metafields: [MetaField!]!
-    versionSlug: String!
+    versionSlug: NonEmptyString!
     isLatest: Boolean!
 
     cfData: CfVideoData!
@@ -74,7 +74,7 @@ type VideoAsset implements Asset {
 
 type CfVideoData {
     uid: ID!
-    allowedOrigins: [String!]!
+    allowedOrigins: [NonEmptyString!]!
 }
 
 type RichTextAsset implements Asset {
@@ -86,14 +86,14 @@ type RichTextAsset implements Asset {
     folder: Folder!
     type: AssetType!
     metafields: [MetaField!]!
-    versionSlug: String!
+    versionSlug: NonEmptyString!
     isLatest: Boolean!
 
     """
     The name of the editor used to create this asset
     Can be used to interpret the format of JSON in contentJson
     """
-    editorName: String!
+    editorName: NonEmptyString!
 
     """
     The JSON representation of the editor state

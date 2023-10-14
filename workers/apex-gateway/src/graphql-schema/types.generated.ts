@@ -21,6 +21,7 @@ export type Scalars = {
   Float: { input: number; output: number };
   DateTime: { input: Date | string; output: Date | string };
   JSON: { input: any; output: any };
+  NonEmptyString: { input: string; output: string };
   UUID: { input: string; output: string };
 };
 
@@ -42,19 +43,19 @@ export type Asset = {
   /** Reveals the underlying type of this asset. Use this to determine which asset type to query for further details */
   type: AssetType;
   updatedAt: Scalars['DateTime']['output'];
-  versionSlug: Scalars['String']['output'];
+  versionSlug: Scalars['NonEmptyString']['output'];
 };
 
 export type AssetType = 'RICH_TEXT' | 'VIDEO';
 
 export type CfVideoData = {
   __typename?: 'CfVideoData';
-  allowedOrigins: Array<Scalars['String']['output']>;
+  allowedOrigins: Array<Scalars['NonEmptyString']['output']>;
   uid: Scalars['ID']['output'];
 };
 
 export type CreateFolderInput = {
-  name: Scalars['String']['input'];
+  name: Scalars['NonEmptyString']['input'];
   parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -74,13 +75,13 @@ export type Folder = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   /** A human readable name for the folder. */
-  name: Scalars['String']['output'];
+  name: Scalars['NonEmptyString']['output'];
   parent?: Maybe<Folder>;
   /**
    * The path of the folder, relative to the root folder.
    * All paths begin with a slash.
    */
-  path: Scalars['String']['output'];
+  path: Scalars['NonEmptyString']['output'];
   updatedAt: Scalars['DateTime']['output'];
 };
 
@@ -102,8 +103,8 @@ export type MetaField = {
   __typename?: 'MetaField';
   asset: Asset;
   id: Scalars['ID']['output'];
-  key: Scalars['String']['output'];
-  value?: Maybe<Scalars['String']['output']>;
+  key: Scalars['NonEmptyString']['output'];
+  value?: Maybe<Scalars['NonEmptyString']['output']>;
   valueType: MetaFieldValueType;
 };
 
@@ -134,7 +135,7 @@ export type QueryfolderByIdArgs = {
 };
 
 export type QueryfolderByPathArgs = {
-  path: Scalars['String']['input'];
+  path: Scalars['NonEmptyString']['input'];
 };
 
 export type RichTextAsset = Asset & {
@@ -151,7 +152,7 @@ export type RichTextAsset = Asset & {
    * The name of the editor used to create this asset
    * Can be used to interpret the format of JSON in contentJson
    */
-  editorName: Scalars['String']['output'];
+  editorName: Scalars['NonEmptyString']['output'];
   folder: Folder;
   guid: Scalars['UUID']['output'];
   id: Scalars['ID']['output'];
@@ -159,7 +160,7 @@ export type RichTextAsset = Asset & {
   metafields: Array<MetaField>;
   type: AssetType;
   updatedAt: Scalars['DateTime']['output'];
-  versionSlug: Scalars['String']['output'];
+  versionSlug: Scalars['NonEmptyString']['output'];
 };
 
 export type VideoAsset = Asset & {
@@ -174,7 +175,7 @@ export type VideoAsset = Asset & {
   metafields: Array<MetaField>;
   type: AssetType;
   updatedAt: Scalars['DateTime']['output'];
-  versionSlug: Scalars['String']['output'];
+  versionSlug: Scalars['NonEmptyString']['output'];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -271,7 +272,6 @@ export type ResolversTypes = {
   Asset: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Asset']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
   AssetType: AssetType;
   CfVideoData: ResolverTypeWrapper<CfVideoData>;
   CreateFolderInput: CreateFolderInput;
@@ -281,10 +281,12 @@ export type ResolversTypes = {
   MetaField: ResolverTypeWrapper<MetaField>;
   MetaFieldValueType: MetaFieldValueType;
   Mutation: ResolverTypeWrapper<{}>;
+  NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   Query: ResolverTypeWrapper<{}>;
   RichTextAsset: ResolverTypeWrapper<RichTextAsset>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
   VideoAsset: ResolverTypeWrapper<VideoAsset>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -292,7 +294,6 @@ export type ResolversParentTypes = {
   Asset: ResolversInterfaceTypes<ResolversParentTypes>['Asset'];
   ID: Scalars['ID']['output'];
   Boolean: Scalars['Boolean']['output'];
-  String: Scalars['String']['output'];
   CfVideoData: CfVideoData;
   CreateFolderInput: CreateFolderInput;
   DateTime: Scalars['DateTime']['output'];
@@ -300,10 +301,12 @@ export type ResolversParentTypes = {
   JSON: Scalars['JSON']['output'];
   MetaField: MetaField;
   Mutation: {};
+  NonEmptyString: Scalars['NonEmptyString']['output'];
   Query: {};
   RichTextAsset: RichTextAsset;
   UUID: Scalars['UUID']['output'];
   VideoAsset: VideoAsset;
+  String: Scalars['String']['output'];
 };
 
 export type AssetResolvers<
@@ -320,14 +323,14 @@ export type AssetResolvers<
   metafields?: Resolver<Array<ResolversTypes['MetaField']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['AssetType'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  versionSlug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  versionSlug?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
 };
 
 export type CfVideoDataResolvers<
   ContextType = GraphQLContext,
   ParentType extends ResolversParentTypes['CfVideoData'] = ResolversParentTypes['CfVideoData'],
 > = {
-  allowedOrigins?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  allowedOrigins?: Resolver<Array<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
   uid?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -350,9 +353,9 @@ export type FolderResolvers<
   children?: Resolver<Array<ResolversTypes['Folder']>, ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   parent?: Resolver<Maybe<ResolversTypes['Folder']>, ParentType, ContextType>;
-  path?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  path?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -367,8 +370,8 @@ export type MetaFieldResolvers<
 > = {
   asset?: Resolver<ResolversTypes['Asset'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  key?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  key?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
   valueType?: Resolver<ResolversTypes['MetaFieldValueType'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -384,6 +387,11 @@ export type MutationResolvers<
     RequireFields<MutationcreateFolderArgs, 'input'>
   >;
 };
+
+export interface NonEmptyStringScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['NonEmptyString'], any> {
+  name: 'NonEmptyString';
+}
 
 export type QueryResolvers<
   ContextType = GraphQLContext,
@@ -416,7 +424,7 @@ export type RichTextAssetResolvers<
   contentJson?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
-  editorName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  editorName?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   folder?: Resolver<ResolversTypes['Folder'], ParentType, ContextType>;
   guid?: Resolver<ResolversTypes['UUID'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
@@ -424,7 +432,7 @@ export type RichTextAssetResolvers<
   metafields?: Resolver<Array<ResolversTypes['MetaField']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['AssetType'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  versionSlug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  versionSlug?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -446,7 +454,7 @@ export type VideoAssetResolvers<
   metafields?: Resolver<Array<ResolversTypes['MetaField']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['AssetType'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
-  versionSlug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  versionSlug?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -458,6 +466,7 @@ export type Resolvers<ContextType = GraphQLContext> = {
   JSON?: GraphQLScalarType;
   MetaField?: MetaFieldResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  NonEmptyString?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   RichTextAsset?: RichTextAssetResolvers<ContextType>;
   UUID?: GraphQLScalarType;

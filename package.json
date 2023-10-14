@@ -7,7 +7,7 @@
     "dev": "dotenv -- turbo run dev",
     "lint": "dotenv -- turbo run lint",
     "test": "dotenv -- turbo run test",
-    "typecheck": "dotenv --turbo run typecheck",
+    "typecheck": "dotenv -- turbo run typecheck",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "gen": "dotenv -- turbo gen"
   },

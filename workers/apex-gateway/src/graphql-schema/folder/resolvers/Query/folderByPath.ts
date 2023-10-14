@@ -1,4 +1,3 @@
-import { GraphQLError } from 'graphql';
 import {
   FolderNotFoundException,
   getFolderByPath as dbQueryGetFolderByPath,
@@ -11,11 +10,6 @@ export const folderByPath: NonNullable<QueryResolvers['folderByPath']> = async (
   ctx
 ) => {
   const folderPath = arg.path;
-  if (folderPath === '/') {
-    throw new GraphQLError(
-      "The root folder '/' does not exist. Please query a named folder you created under root"
-    );
-  }
   let folder: Awaited<ReturnType<typeof dbQueryGetFolderByPath>>;
   try {
     folder = await dbQueryGetFolderByPath(folderPath, ctx);
