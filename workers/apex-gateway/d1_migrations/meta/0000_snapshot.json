@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "5ca0c715-d32a-46af-b1e1-a7ad5f0dc382",
+  "id": "5b0d40c6-f957-4690-8fb7-7f9f9ab45d90",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "asset": {
@@ -62,7 +62,7 @@
           "name": "latest_version_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "autoincrement": false
         }
       },
