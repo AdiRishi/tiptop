@@ -1,5 +1,6 @@
 extend type Query {
     folderById(id: ID!): Folder
+    folderByPath(path: String!): Folder
 }
 
 extend type Mutation {

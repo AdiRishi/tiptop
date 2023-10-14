@@ -122,6 +122,7 @@ export type Query = {
   __typename?: 'Query';
   assetById?: Maybe<Asset>;
   folderById?: Maybe<Folder>;
+  folderByPath?: Maybe<Folder>;
 };
 
 export type QueryassetByIdArgs = {
@@ -130,6 +131,10 @@ export type QueryassetByIdArgs = {
 
 export type QueryfolderByIdArgs = {
   id: Scalars['ID']['input'];
+};
+
+export type QueryfolderByPathArgs = {
+  path: Scalars['String']['input'];
 };
 
 export type RichTextAsset = Asset & {
@@ -395,6 +400,12 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryfolderByIdArgs, 'id'>
+  >;
+  folderByPath?: Resolver<
+    Maybe<ResolversTypes['Folder']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryfolderByPathArgs, 'path'>
   >;
 };
 
