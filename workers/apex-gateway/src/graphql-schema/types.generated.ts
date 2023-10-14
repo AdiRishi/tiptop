@@ -21,6 +21,7 @@ export type Scalars = {
   Float: { input: number; output: number };
   DateTime: { input: Date | string; output: Date | string };
   JSON: { input: any; output: any };
+  JSONObject: { input: Record<string, any>; output: Record<string, any> };
   NonEmptyString: { input: string; output: string };
   UUID: { input: string; output: string };
 };
@@ -63,6 +64,12 @@ export type CreateFolderInput = {
   parentPath: Scalars['NonEmptyString']['input'];
 };
 
+export type CreateRichTextAssetInput = {
+  contentJson: Scalars['JSON']['input'];
+  editorName: Scalars['NonEmptyString']['input'];
+  folderPath: Scalars['NonEmptyString']['input'];
+};
+
 /**
  * A folder is the core unit of organization in the asset library.
  * Folders can contain other folders and assets.
@@ -101,26 +108,38 @@ export type FolderassetsArgs = {
  * Every asset can have "data" fields stored alongside it.
  * Metafields can have multiple different types, e.g string, json, date, etc.
  * - Each type must be serializable to a string
- * - Metafields are queriable with high perforamnce (indexed)
+ * - Metafields are queriable with high performance (indexed)
  */
 export type MetaField = {
   __typename?: 'MetaField';
   asset: Asset;
   id: Scalars['ID']['output'];
   key: Scalars['NonEmptyString']['output'];
-  value?: Maybe<Scalars['NonEmptyString']['output']>;
+  value: Scalars['NonEmptyString']['output'];
   valueType: MetaFieldValueType;
 };
 
 export type MetaFieldValueType = 'DATE' | 'TEXT';
 
+export type MetafieldInput = {
+  __typename?: 'MetafieldInput';
+  key: Scalars['NonEmptyString']['output'];
+  value: Scalars['NonEmptyString']['output'];
+  valueType: MetaFieldValueType;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createFolder?: Maybe<Folder>;
+  createRichTextAsset: RichTextAsset;
 };
 
 export type MutationcreateFolderArgs = {
   input: CreateFolderInput;
+};
+
+export type MutationcreateRichTextAssetArgs = {
+  input: CreateRichTextAssetInput;
 };
 
 export type Query = {
@@ -149,7 +168,7 @@ export type RichTextAsset = Asset & {
    * Editors serialize their content differently.
    * Refer to editorName to find out what editor was used to create this JSON.
    */
-  contentJson: Scalars['JSON']['output'];
+  contentJson: Scalars['JSONObject']['output'];
   createdAt: Scalars['DateTime']['output'];
   deletedAt?: Maybe<Scalars['DateTime']['output']>;
   /**
@@ -279,11 +298,14 @@ export type ResolversTypes = {
   AssetType: AssetType;
   CfVideoData: ResolverTypeWrapper<CfVideoData>;
   CreateFolderInput: CreateFolderInput;
+  CreateRichTextAssetInput: CreateRichTextAssetInput;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']['output']>;
   Folder: ResolverTypeWrapper<Folder>;
   JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
+  JSONObject: ResolverTypeWrapper<Scalars['JSONObject']['output']>;
   MetaField: ResolverTypeWrapper<MetaField>;
   MetaFieldValueType: MetaFieldValueType;
+  MetafieldInput: ResolverTypeWrapper<MetafieldInput>;
   Mutation: ResolverTypeWrapper<{}>;
   NonEmptyString: ResolverTypeWrapper<Scalars['NonEmptyString']['output']>;
   Query: ResolverTypeWrapper<{}>;
@@ -300,10 +322,13 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   CfVideoData: CfVideoData;
   CreateFolderInput: CreateFolderInput;
+  CreateRichTextAssetInput: CreateRichTextAssetInput;
   DateTime: Scalars['DateTime']['output'];
   Folder: Folder;
   JSON: Scalars['JSON']['output'];
+  JSONObject: Scalars['JSONObject']['output'];
   MetaField: MetaField;
+  MetafieldInput: MetafieldInput;
   Mutation: {};
   NonEmptyString: Scalars['NonEmptyString']['output'];
   Query: {};
@@ -368,6 +393,11 @@ export interface JSONScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'JSON';
 }
 
+export interface JSONObjectScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes['JSONObject'], any> {
+  name: 'JSONObject';
+}
+
 export type MetaFieldResolvers<
   ContextType = GraphQLContext,
   ParentType extends ResolversParentTypes['MetaField'] = ResolversParentTypes['MetaField'],
@@ -375,7 +405,18 @@ export type MetaFieldResolvers<
   asset?: Resolver<ResolversTypes['Asset'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   key?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['NonEmptyString']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  valueType?: Resolver<ResolversTypes['MetaFieldValueType'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type MetafieldInputResolvers<
+  ContextType = GraphQLContext,
+  ParentType extends
+    ResolversParentTypes['MetafieldInput'] = ResolversParentTypes['MetafieldInput'],
+> = {
+  key?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
   valueType?: Resolver<ResolversTypes['MetaFieldValueType'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -389,6 +430,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationcreateFolderArgs, 'input'>
+  >;
+  createRichTextAsset?: Resolver<
+    ResolversTypes['RichTextAsset'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationcreateRichTextAssetArgs, 'input'>
   >;
 };
 
@@ -425,7 +472,7 @@ export type RichTextAssetResolvers<
   ContextType = GraphQLContext,
   ParentType extends ResolversParentTypes['RichTextAsset'] = ResolversParentTypes['RichTextAsset'],
 > = {
-  contentJson?: Resolver<ResolversTypes['JSON'], ParentType, ContextType>;
+  contentJson?: Resolver<ResolversTypes['JSONObject'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   deletedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
   editorName?: Resolver<ResolversTypes['NonEmptyString'], ParentType, ContextType>;
@@ -468,7 +515,9 @@ export type Resolvers<ContextType = GraphQLContext> = {
   DateTime?: GraphQLScalarType;
   Folder?: FolderResolvers<ContextType>;
   JSON?: GraphQLScalarType;
+  JSONObject?: GraphQLScalarType;
   MetaField?: MetaFieldResolvers<ContextType>;
+  MetafieldInput?: MetafieldInputResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   NonEmptyString?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;

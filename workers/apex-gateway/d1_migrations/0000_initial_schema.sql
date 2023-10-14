@@ -6,7 +6,7 @@ CREATE TABLE `asset` (
 	`folder_id` integer NOT NULL,
 	`guid` text NOT NULL,
 	`type` text NOT NULL,
-	`latest_version_id` integer NOT NULL,
+	`latest_version_id` integer,
 	FOREIGN KEY (`folder_id`) REFERENCES `folder`(`id`) ON UPDATE no action ON DELETE no action,
 	FOREIGN KEY (`latest_version_id`) REFERENCES `asset_version`(`id`) ON UPDATE no action ON DELETE no action
 );

@@ -2,6 +2,10 @@ extend type Query {
     assetById(id: ID!): Asset
 }
 
+extend type Mutation {
+    createRichTextAsset(input: CreateRichTextAssetInput!): RichTextAsset!
+}
+
 """
 An asset is an abstracted object that represents some piece of data in this system.
 Assets have different types and versions.
@@ -41,15 +45,20 @@ enum AssetType {
 Every asset can have "data" fields stored alongside it.
 Metafields can have multiple different types, e.g string, json, date, etc.
 - Each type must be serializable to a string
-- Metafields are queriable with high perforamnce (indexed)
+- Metafields are queriable with high performance (indexed)
 """
 type MetaField {
     id: ID!
     key: NonEmptyString!
     valueType: MetaFieldValueType!
-    value: NonEmptyString
+    value: NonEmptyString!
 
     asset: Asset!
+}
+type MetafieldInput {
+    key: NonEmptyString!
+    valueType: MetaFieldValueType!
+    value: NonEmptyString!
 }
 
 enum MetaFieldValueType {
@@ -100,5 +109,11 @@ type RichTextAsset implements Asset {
     Editors serialize their content differently.
     Refer to editorName to find out what editor was used to create this JSON.
     """
+    contentJson: JSONObject!
+}
+
+input CreateRichTextAssetInput {
+    folderPath: NonEmptyString!
+    editorName: NonEmptyString!
     contentJson: JSON!
 }

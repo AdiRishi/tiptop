@@ -27,19 +27,19 @@ export const assetTable = sqliteTable(
     createdAt: dateTime('created_at').notNull().default(dateTimeDefaultSQL),
     updatedAt: dateTime('updated_at').notNull().default(dateTimeDefaultSQL),
     deletedAt: dateTime('deleted_at'),
-    folder_id: integer('folder_id')
+    folderId: integer('folder_id')
       .notNull()
       .references(() => folderTable.id),
     guid: text('guid').notNull(),
     type: text('type', { enum: ['RICH_TEXT', 'VIDEO'] }).notNull(),
-    latest_version_id: integer('latest_version_id')
-      .notNull()
-      .references((): AnySQLiteColumn => assetVersionTable.id),
+    latestVersionId: integer('latest_version_id').references(
+      (): AnySQLiteColumn => assetVersionTable.id
+    ),
   },
   (table) => ({
     guidIdx: index('idx_asset_guid').on(table.guid),
     folderIdIdx: index('idx_asset_folder_id_type_deleted_at').on(
-      table.folder_id,
+      table.folderId,
       table.type,
       table.deletedAt
     ),
