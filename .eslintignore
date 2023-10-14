@@ -12,4 +12,4 @@ playwright-report
 .next
 .cache
 turbo/generators/templates
-*.generated.ts
+**/*.generated.ts
