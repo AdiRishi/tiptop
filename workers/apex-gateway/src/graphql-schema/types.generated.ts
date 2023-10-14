@@ -148,6 +148,8 @@ export type Query = {
   assetById?: Maybe<Asset>;
   folderById?: Maybe<Folder>;
   folderByPath?: Maybe<Folder>;
+  richTextAssetByGuid?: Maybe<RichTextAsset>;
+  richTextAssetById?: Maybe<RichTextAsset>;
 };
 
 export type QueryassetByGuidArgs = {
@@ -164,6 +166,14 @@ export type QueryfolderByIdArgs = {
 
 export type QueryfolderByPathArgs = {
   path: Scalars['NonEmptyString']['input'];
+};
+
+export type QueryrichTextAssetByGuidArgs = {
+  guid: Scalars['UUID']['input'];
+};
+
+export type QueryrichTextAssetByIdArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type RichTextAsset = Asset & {
@@ -476,6 +486,18 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryfolderByPathArgs, 'path'>
+  >;
+  richTextAssetByGuid?: Resolver<
+    Maybe<ResolversTypes['RichTextAsset']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryrichTextAssetByGuidArgs, 'guid'>
+  >;
+  richTextAssetById?: Resolver<
+    Maybe<ResolversTypes['RichTextAsset']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryrichTextAssetByIdArgs, 'id'>
   >;
 };
 

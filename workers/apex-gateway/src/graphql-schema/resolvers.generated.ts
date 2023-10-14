@@ -10,6 +10,8 @@ import { assetByGuid as Query_assetByGuid } from './asset/resolvers/Query/assetB
 import { assetById as Query_assetById } from './asset/resolvers/Query/assetById';
 import { folderById as Query_folderById } from './folder/resolvers/Query/folderById';
 import { folderByPath as Query_folderByPath } from './folder/resolvers/Query/folderByPath';
+import { richTextAssetByGuid as Query_richTextAssetByGuid } from './asset/resolvers/Query/richTextAssetByGuid';
+import { richTextAssetById as Query_richTextAssetById } from './asset/resolvers/Query/richTextAssetById';
 import { RichTextAsset } from './asset/resolvers/RichTextAsset';
 import { VideoAsset } from './asset/resolvers/VideoAsset';
 import {
@@ -25,6 +27,8 @@ export const resolvers: Resolvers = {
     assetById: Query_assetById,
     folderById: Query_folderById,
     folderByPath: Query_folderByPath,
+    richTextAssetByGuid: Query_richTextAssetByGuid,
+    richTextAssetById: Query_richTextAssetById,
   },
   Mutation: {
     createFolder: Mutation_createFolder,
