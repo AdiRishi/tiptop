@@ -53,7 +53,7 @@ jobs:
       - run: pnpm build --filter apex-gateway
 
       - name: Deploy apex-gateway
-        uses: cloudflare/wrangler-action@v3.3.1
+        uses: Sukrit-Ecosystem/wrangler-action@master
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
@@ -77,7 +77,7 @@ jobs:
       - run: pnpm build --filter editor-webapp
 
       - name: Deploy editor-webapp
-        uses: cloudflare/wrangler-action@v3.3.1
+        uses: Sukrit-Ecosystem/wrangler-action@master
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
