@@ -42,6 +42,10 @@ type Folder {
 }
 
 input CreateFolderInput {
-    parentId: ID
+    """
+    The parent folder's path.
+    If you want to create a folder at the root level, use "/".
+    """
+    parentPath: NonEmptyString!
     name: NonEmptyString!
 }

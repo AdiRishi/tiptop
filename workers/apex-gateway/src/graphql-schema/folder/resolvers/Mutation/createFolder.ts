@@ -1,4 +1,10 @@
-import { createFolder as dbMutationCreateFolder } from '../../../../db-mutations/folder';
+import { GraphQLError } from 'graphql';
+import { createFolder as dbMutationCreateFolder } from '~/db-mutations/folder';
+import {
+  getRootFolder as dbQueryGetRootFolder,
+  getFolderByPath as dbQueryGetFolderByPath,
+  FolderNotFoundException,
+} from '~/db-queries/folder';
 import type { MutationResolvers } from '../../../types.generated';
 
 export const createFolder: NonNullable<MutationResolvers['createFolder']> = async (
@@ -6,11 +12,25 @@ export const createFolder: NonNullable<MutationResolvers['createFolder']> = asyn
   arg,
   ctx
 ) => {
+  const parentFolderPath = arg.input.parentPath;
+  let parentFolder: Awaited<ReturnType<typeof dbQueryGetFolderByPath>>;
+
+  try {
+    if (parentFolderPath === '/') {
+      // Use a separate query to get the root folder as this can be cached longer in the KV
+      parentFolder = await dbQueryGetRootFolder(ctx);
+    } else {
+      parentFolder = await dbQueryGetFolderByPath(parentFolderPath, ctx);
+    }
+  } catch (error: unknown) {
+    if (error instanceof FolderNotFoundException) {
+      throw new GraphQLError(`Parent folder with path '${parentFolderPath}' not found`);
+    }
+    throw error;
+  }
+
   const folder = await dbMutationCreateFolder(
-    {
-      name: arg.input.name,
-      parentId: arg.input.parentId ? parseInt(arg.input.parentId) : undefined,
-    },
+    { name: arg.input.name, parentId: parentFolder.id },
     ctx
   );
 

@@ -1187,33 +1187,44 @@ export const typeDefs = {
       fields: [
         {
           kind: 'InputValueDefinition',
-          name: { kind: 'Name', value: 'parentId', loc: { start: 3249, end: 3257 } },
-          type: {
-            kind: 'NamedType',
-            name: { kind: 'Name', value: 'ID', loc: { start: 3259, end: 3261 } },
-            loc: { start: 3259, end: 3261 },
+          description: {
+            kind: 'StringValue',
+            value:
+              'The parent folder\'s path.\nIf you want to create a folder at the root level, use "/".',
+            block: true,
+            loc: { start: 3249, end: 3351 },
           },
-          directives: [],
-          loc: { start: 3249, end: 3261 },
-        },
-        {
-          kind: 'InputValueDefinition',
-          name: { kind: 'Name', value: 'name', loc: { start: 3264, end: 3268 } },
+          name: { kind: 'Name', value: 'parentPath', loc: { start: 3354, end: 3364 } },
           type: {
             kind: 'NonNullType',
             type: {
               kind: 'NamedType',
-              name: { kind: 'Name', value: 'NonEmptyString', loc: { start: 3270, end: 3284 } },
-              loc: { start: 3270, end: 3284 },
+              name: { kind: 'Name', value: 'NonEmptyString', loc: { start: 3366, end: 3380 } },
+              loc: { start: 3366, end: 3380 },
             },
-            loc: { start: 3270, end: 3285 },
+            loc: { start: 3366, end: 3381 },
           },
           directives: [],
-          loc: { start: 3264, end: 3285 },
+          loc: { start: 3249, end: 3381 },
+        },
+        {
+          kind: 'InputValueDefinition',
+          name: { kind: 'Name', value: 'name', loc: { start: 3384, end: 3388 } },
+          type: {
+            kind: 'NonNullType',
+            type: {
+              kind: 'NamedType',
+              name: { kind: 'Name', value: 'NonEmptyString', loc: { start: 3390, end: 3404 } },
+              loc: { start: 3390, end: 3404 },
+            },
+            loc: { start: 3390, end: 3405 },
+          },
+          directives: [],
+          loc: { start: 3384, end: 3405 },
         },
       ],
-      loc: { start: 3221, end: 3287 },
+      loc: { start: 3221, end: 3407 },
     },
   ],
-  loc: { start: 0, end: 3288 },
+  loc: { start: 0, end: 3408 },
 } as unknown as DocumentNode;

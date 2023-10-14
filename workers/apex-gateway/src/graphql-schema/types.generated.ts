@@ -56,7 +56,11 @@ export type CfVideoData = {
 
 export type CreateFolderInput = {
   name: Scalars['NonEmptyString']['input'];
-  parentId?: InputMaybe<Scalars['ID']['input']>;
+  /**
+   * The parent folder's path.
+   * If you want to create a folder at the root level, use "/".
+   */
+  parentPath: Scalars['NonEmptyString']['input'];
 };
 
 /**

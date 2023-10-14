@@ -5,7 +5,7 @@ import { getDrizzleClient } from '../db-schema/db-client';
 import { FolderSelectType, folderTable } from '../db-schema/schema';
 
 export async function createFolder(
-  folderData: { name: string; parentId?: number },
+  folderData: { name: string; parentId: number },
   env: Env
 ): Promise<FolderSelectType> {
   const db = getDrizzleClient(env);

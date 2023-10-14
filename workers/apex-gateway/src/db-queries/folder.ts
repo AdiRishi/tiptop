@@ -21,6 +21,10 @@ export async function getFolderByPath(folderPath: string, env: Env): Promise<Fol
   return folder;
 }
 
+export async function getRootFolder(env: Env): Promise<FolderSelectType> {
+  return await getFolderByPath('/', env);
+}
+
 export async function getSubfoldersById(
   parentFolderId: number,
   env: Env
