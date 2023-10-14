@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBOREPO_REMOTE_CACHE_AUTH_SECRET }}
@@ -40,8 +40,8 @@ jobs:
     name: Publish Cloudflare Workers
     needs: [check]
     runs-on: ubuntu-latest
-    # Only run on master as cloudflare/wrangler-action does not support preview deployments
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    # Only run on main as cloudflare/wrangler-action does not support preview deployments
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
