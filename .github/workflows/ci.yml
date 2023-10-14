@@ -50,10 +50,10 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --prod=false
-      - run: yarn build --filter apex-gateway
+      - run: pnpm build --filter apex-gateway
 
       - name: Deploy apex-gateway
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v3.3.1
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
@@ -74,10 +74,10 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --prod=false
-      - run: yarn build --filter editor-webapp
+      - run: pnpm build --filter editor-webapp
 
       - name: Deploy editor-webapp
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v3.3.1
         with:
           accountId: ${{ secrets.CF_ACCOUNT_ID || secrets.CLOUDFLARE_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
