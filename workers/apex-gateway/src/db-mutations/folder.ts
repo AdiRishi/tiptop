@@ -38,23 +38,25 @@ export async function updateFolder(
 
   const folderWithParent = await getFolderWithParent(identifier, env);
 
-  let newParentFolder: FolderSelectType | undefined;
+  let newParentFolder: FolderSelectType | null = folderWithParent.parent;
   if (updateData.parentId) {
     newParentFolder = await getFolderById(updateData.parentId, env);
   } else if (updateData.parentPath) {
     newParentFolder = await getFolderWithParent({ path: updateData.parentPath }, env);
   }
 
-  let newPath = folderWithParent.path;
-  if (updateData.name) {
-    newPath = path.join(
-      path.dirname(newParentFolder?.path ?? folderWithParent?.parent?.path ?? '/'),
-      updateData.name
-    );
-  }
   let newName = folderWithParent.name;
   if (updateData.name) {
     newName = updateData.name;
+  }
+
+  let newPath = folderWithParent.path;
+  newPath = path.join(
+    path.dirname(newParentFolder?.path ?? folderWithParent?.parent?.path ?? '/'),
+    newName
+  );
+  if (!newParentFolder) {
+    newPath = '/';
   }
 
   return await db

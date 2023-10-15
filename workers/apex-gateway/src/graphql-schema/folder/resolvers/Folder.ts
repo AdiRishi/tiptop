@@ -12,8 +12,9 @@ export const Folder: FolderResolvers = {
    * We handle this in the type resolver so that we can avoid making a database query if the parent field is not requested.
    */
   parent: async (parent, _args, ctx) => {
+    const currentFolderPath = parent.path;
     const parentDirectoryPath = path.dirname(parent.path);
-    if (parentDirectoryPath !== '/') {
+    if (currentFolderPath !== parentDirectoryPath) {
       const parentFolder = await dbQueryGetFolderByPath(parentDirectoryPath, ctx);
       return {
         id: parentFolder.id,
@@ -25,8 +26,6 @@ export const Folder: FolderResolvers = {
         children: [],
         assets: [],
       };
-    } else {
-      return parent.parent;
     }
   },
   children: async (parent, _args, ctx) => {
