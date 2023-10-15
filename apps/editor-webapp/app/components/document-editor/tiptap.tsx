@@ -11,11 +11,11 @@ export function Tiptap() {
   });
 
   return (
-    <div className="max-w-[800px] bg-white dark:bg-gray-900 shadow-lg rounded-lg overflow-hidden">
+    <div className="w-full bg-white dark:bg-gray-900 rounded-lg overflow-hidden border">
       <MenuBar />
       <EditorContent
         editor={editor}
-        className="w-full border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full focus:outline-none focus:shadow-outline border border-input bg-background px-3 py-3 text-sm ring-offset-background placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
       />
     </div>
   );
