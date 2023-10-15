@@ -1,0 +1,31 @@
+{
+  "name": "envelop-response-cache-cloudflare-kv",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@8.8.0",
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.js,.cjs,.mjs --fix"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231010.0",
+    "@envelop/response-cache": "^5.5.0",
+    "@vitest/coverage-v8": "0.34.6",
+    "eslint": "^8.51.0",
+    "eslint-config-tiptop-base": "workspace:*",
+    "graphql": "^16.8.1",
+    "miniflare": "^3.20231010.0",
+    "tsconfig": "workspace:*",
+    "typescript": "^5.2.2",
+    "vite-tsconfig-paths": "^4.2.1",
+    "vitest": "0.34.6",
+    "vitest-environment-miniflare": "^2.14.1",
+    "wrangler": "^3.12.0"
+  },
+  "peerDependencies": {
+    "@envelop/response-cache": "^5.5.0",
+    "graphql": "^16.8.1"
+  }
+}

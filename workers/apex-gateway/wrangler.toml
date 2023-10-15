@@ -13,3 +13,8 @@ database_name = "tiptop-db"
 database_id = "b1009298-52b8-4d1d-80eb-59cd0c3ce649"
 migrations_table = "d1_migrations"
 migrations_dir = "d1_migrations"
+
+[[kv_namespaces]]
+binding = "GRAPHQL_RESPONSE_CACHE"
+id = "62ea2995ed2e475e97970df294678e90"
+preview_id = "<ignored>"

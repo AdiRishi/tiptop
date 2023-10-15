@@ -1,6 +1,6 @@
 import { unstable_dev } from 'wrangler';
 import type { UnstableDevWorker } from 'wrangler';
-import { describe, expect, it, beforeAll, afterAll, beforeEach } from 'vitest';
+import { describe, expect, it, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 import { graphqlServer } from './index';
 import { Env } from '.';
 
@@ -16,12 +16,16 @@ describe('apex-gateway worker', () => {
   });
 
   afterAll(async () => {
-    await worker.stop();
+    await getMiniflareWaitUntil(ctx);
   });
 
   beforeEach(() => {
     workerEnv = getMiniflareBindings();
     ctx = new ExecutionContext();
+  });
+
+  afterEach(async () => {
+    await getMiniflareWaitUntil(ctx);
   });
 
   it('Worker should be able to boot successfully', () => {

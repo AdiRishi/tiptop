@@ -145,8 +145,53 @@ importers:
 
   configs/tsconfig: {}
 
+  packages/envelop-response-cache-cloudflare-kv:
+    devDependencies:
+      '@cloudflare/workers-types':
+        specifier: ^4.20231010.0
+        version: 4.20231010.0
+      '@envelop/response-cache':
+        specifier: ^5.5.0
+        version: 5.5.0(@envelop/core@4.0.3)(graphql@16.8.1)
+      '@vitest/coverage-v8':
+        specifier: 0.34.6
+        version: 0.34.6(vitest@0.34.6)
+      eslint:
+        specifier: ^8.51.0
+        version: 8.51.0
+      eslint-config-tiptop-base:
+        specifier: workspace:*
+        version: link:../../configs/eslint-config-tiptop-base
+      graphql:
+        specifier: ^16.8.1
+        version: 16.8.1
+      miniflare:
+        specifier: ^3.20231010.0
+        version: 3.20231010.0
+      tsconfig:
+        specifier: workspace:*
+        version: link:../../configs/tsconfig
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite-tsconfig-paths:
+        specifier: ^4.2.1
+        version: 4.2.1(typescript@5.2.2)
+      vitest:
+        specifier: 0.34.6
+        version: 0.34.6
+      vitest-environment-miniflare:
+        specifier: ^2.14.1
+        version: 2.14.1(vitest@0.34.6)
+      wrangler:
+        specifier: ^3.12.0
+        version: 3.12.0
+
   workers/apex-gateway:
     dependencies:
+      '@envelop/response-cache':
+        specifier: ^5.5.0
+        version: 5.5.0(@envelop/core@4.0.3)(graphql@16.8.1)
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
@@ -156,6 +201,9 @@ importers:
       drizzle-orm:
         specifier: ^0.28.6
         version: 0.28.6(@cloudflare/workers-types@4.20231010.0)(better-sqlite3@9.0.0)
+      envelop-response-cache-cloudflare-kv:
+        specifier: workspace:*
+        version: link:../../packages/envelop-response-cache-cloudflare-kv
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
@@ -1053,14 +1101,27 @@ packages:
     dependencies:
       '@envelop/types': 4.0.1
       tslib: 2.6.2
-    dev: false
+
+  /@envelop/response-cache@5.5.0(@envelop/core@4.0.3)(graphql@16.8.1):
+    resolution: {integrity: sha512-qtjchYOYYx0JTnmRfUU/B02T+zbnZbGAzYtqGYN97+e60zPsz9eO0E1/MUqS4dzBAg0G5sDC2/dRYuX9FQCFpA==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@envelop/core': ^4.0.3
+      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@envelop/core': 4.0.3
+      '@graphql-tools/utils': 10.0.7(graphql@16.8.1)
+      '@whatwg-node/fetch': 0.9.13
+      fast-json-stable-stringify: 2.1.0
+      graphql: 16.8.1
+      lru-cache: 10.0.1
+      tslib: 2.6.2
 
   /@envelop/types@4.0.1:
     resolution: {integrity: sha512-ULo27/doEsP7uUhm2iTnElx13qTO6I5FKvmLoX41cpfuw8x6e0NUFknoqhEsLzAbgz8xVS5mjwcxGCXh4lDYzg==}
     engines: {node: '>=16.0.0'}
     dependencies:
       tslib: 2.6.2
-    dev: false
 
   /@esbuild-kit/core-utils@3.3.2:
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
