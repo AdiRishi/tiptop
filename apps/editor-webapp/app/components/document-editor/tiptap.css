@@ -1,0 +1,6 @@
+.tiptap {
+  min-height: 500px;
+}
+.tiptap:focus {
+  outline: none;
+}

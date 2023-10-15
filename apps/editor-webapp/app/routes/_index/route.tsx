@@ -10,22 +10,23 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <>
-      <Navbar />
       <main className="flex">
-        <div className="w-1/4 p-2">
-          <div id="current-selection" className="flex justify-between">
-            <div>
-              <p>Studio</p>
-              <p>The ultimate cms</p>
-            </div>
-            <div>
-              <Undo />
+        <div className="fixed w-96 left-0 top-0">
+          <div id="current-selection" className=" h-screen border-r-2 bg-gray-100">
+            <div className='p-6'>
+              <div className='text-4xl font-bold leading-normal mb-12'>TIPTOP</div>
+              <div>
+                <div className='py-2 text-lg'>Editor</div>
+                <div className='py-2 text-lg'>Media</div>
+              </div>
             </div>
           </div>
-          <div id="file-explorer">Files</div>
         </div>
-        <div className="w-3/4">
-          <DocumentEditor />
+        <div className="ml-96 w-full">
+          <Navbar />
+          <div className='p-6 mt-16'>
+            <DocumentEditor />
+          </div>
         </div>
       </main>
     </>
