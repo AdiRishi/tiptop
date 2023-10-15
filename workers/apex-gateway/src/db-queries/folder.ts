@@ -38,4 +38,33 @@ export async function getSubfoldersById(
   return folders;
 }
 
+export async function getFolderWithParent(identifier: { path?: string; id?: number }, env: Env) {
+  const db = getDrizzleClient(env);
+  let folderWithParent: (FolderSelectType & { parent: FolderSelectType | null }) | undefined;
+
+  if (identifier.id) {
+    folderWithParent = await db.query.folderTable.findFirst({
+      where: eq(folderTable.id, identifier.id),
+      with: {
+        parent: true,
+      },
+    });
+  } else if (identifier.path) {
+    folderWithParent = await db.query.folderTable.findFirst({
+      where: eq(folderTable.path, identifier.path),
+      with: {
+        parent: true,
+      },
+    });
+  } else {
+    throw new Error('Either id or name must be provided');
+  }
+
+  if (!folderWithParent) {
+    throw new FolderNotFoundException('Folder not found');
+  }
+
+  return folderWithParent;
+}
+
 export class FolderNotFoundException extends Error {}

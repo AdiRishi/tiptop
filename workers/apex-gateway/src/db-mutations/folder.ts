@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { eq } from 'drizzle-orm';
 import { Env } from '..';
-import { getFolderById } from '../db-queries/folder';
+import { getFolderById, getFolderWithParent } from '../db-queries/folder';
 import { getDrizzleClient } from '../db-schema/db-client';
 import { FolderSelectType, folderTable } from '../db-schema/schema';
 
@@ -29,17 +29,42 @@ export async function createFolder(
     .get();
 }
 
-export async function updateFolderName(
-  folderId: number,
-  name: string,
+export async function updateFolder(
+  identifier: { path?: string; id?: number },
+  updateData: { name?: string | null; parentPath?: string | null; parentId?: number | null },
   env: Env
-): Promise<FolderSelectType> {
+) {
   const db = getDrizzleClient(env);
+
+  const folderWithParent = await getFolderWithParent(identifier, env);
+
+  let newParentFolder: FolderSelectType | undefined;
+  if (updateData.parentId) {
+    newParentFolder = await getFolderById(updateData.parentId, env);
+  } else if (updateData.parentPath) {
+    newParentFolder = await getFolderWithParent({ path: updateData.parentPath }, env);
+  }
+
+  let newPath = folderWithParent.path;
+  if (updateData.name) {
+    newPath = path.join(
+      path.dirname(newParentFolder?.path ?? folderWithParent?.parent?.path ?? '/'),
+      updateData.name
+    );
+  }
+  let newName = folderWithParent.name;
+  if (updateData.name) {
+    newName = updateData.name;
+  }
 
   return await db
     .update(folderTable)
-    .set({ name })
-    .where(eq(folderTable.id, folderId))
+    .set({
+      path: newPath,
+      parentId: newParentFolder?.id ?? folderWithParent.parentId,
+      name: newName,
+    })
+    .where(eq(folderTable.id, folderWithParent.id))
     .returning()
     .get();
 }

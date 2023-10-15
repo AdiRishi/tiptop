@@ -6,6 +6,7 @@ extend type Query {
 extend type Mutation {
     createFolder(input: CreateFolderInput!): Folder
     updateFolderById(input: UpdateFolderByIdInput!): Folder
+    updateFolderByPath(input: UpdateFolderByPathInput!): Folder
 }
 
 """
@@ -53,5 +54,10 @@ input CreateFolderInput {
 
 input UpdateFolderByIdInput {
     id: ID!
+    name: NonEmptyString
+}
+
+input UpdateFolderByPathInput {
+    path: NonEmptyString!
     name: NonEmptyString
 }

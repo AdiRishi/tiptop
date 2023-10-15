@@ -7,6 +7,7 @@ import { MetafieldInput } from './asset/resolvers/MetafieldInput';
 import { createFolder as Mutation_createFolder } from './folder/resolvers/Mutation/createFolder';
 import { createRichTextAsset as Mutation_createRichTextAsset } from './asset/resolvers/Mutation/createRichTextAsset';
 import { updateFolderById as Mutation_updateFolderById } from './folder/resolvers/Mutation/updateFolderById';
+import { updateFolderByPath as Mutation_updateFolderByPath } from './folder/resolvers/Mutation/updateFolderByPath';
 import { assetByGuid as Query_assetByGuid } from './asset/resolvers/Query/assetByGuid';
 import { assetById as Query_assetById } from './asset/resolvers/Query/assetById';
 import { folderById as Query_folderById } from './folder/resolvers/Query/folderById';
@@ -35,6 +36,7 @@ export const resolvers: Resolvers = {
     createFolder: Mutation_createFolder,
     createRichTextAsset: Mutation_createRichTextAsset,
     updateFolderById: Mutation_updateFolderById,
+    updateFolderByPath: Mutation_updateFolderByPath,
   },
 
   CfVideoData: CfVideoData,
