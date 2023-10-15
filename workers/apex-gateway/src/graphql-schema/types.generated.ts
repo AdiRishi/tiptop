@@ -132,6 +132,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createFolder?: Maybe<Folder>;
   createRichTextAsset: RichTextAsset;
+  updateFolderById?: Maybe<Folder>;
 };
 
 export type MutationcreateFolderArgs = {
@@ -140,6 +141,10 @@ export type MutationcreateFolderArgs = {
 
 export type MutationcreateRichTextAssetArgs = {
   input: CreateRichTextAssetInput;
+};
+
+export type MutationupdateFolderByIdArgs = {
+  input: UpdateFolderByIdInput;
 };
 
 export type Query = {
@@ -199,6 +204,11 @@ export type RichTextAsset = Asset & {
   type: AssetType;
   updatedAt: Scalars['DateTime']['output'];
   versionSlug: Scalars['NonEmptyString']['output'];
+};
+
+export type UpdateFolderByIdInput = {
+  id: Scalars['ID']['input'];
+  name?: InputMaybe<Scalars['NonEmptyString']['input']>;
 };
 
 export type VideoAsset = Asset & {
@@ -326,6 +336,7 @@ export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   RichTextAsset: ResolverTypeWrapper<RichTextAsset>;
   UUID: ResolverTypeWrapper<Scalars['UUID']['output']>;
+  UpdateFolderByIdInput: UpdateFolderByIdInput;
   VideoAsset: ResolverTypeWrapper<VideoAsset>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
 };
@@ -349,6 +360,7 @@ export type ResolversParentTypes = {
   Query: {};
   RichTextAsset: RichTextAsset;
   UUID: Scalars['UUID']['output'];
+  UpdateFolderByIdInput: UpdateFolderByIdInput;
   VideoAsset: VideoAsset;
   String: Scalars['String']['output'];
 };
@@ -451,6 +463,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationcreateRichTextAssetArgs, 'input'>
+  >;
+  updateFolderById?: Resolver<
+    Maybe<ResolversTypes['Folder']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationupdateFolderByIdArgs, 'input'>
   >;
 };
 

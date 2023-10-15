@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { eq } from 'drizzle-orm';
 import { Env } from '..';
 import { getFolderById } from '../db-queries/folder';
 import { getDrizzleClient } from '../db-schema/db-client';
@@ -24,6 +25,21 @@ export async function createFolder(
   return await db
     .insert(folderTable)
     .values({ ...folderData, path: folderPath })
+    .returning()
+    .get();
+}
+
+export async function updateFolderName(
+  folderId: number,
+  name: string,
+  env: Env
+): Promise<FolderSelectType> {
+  const db = getDrizzleClient(env);
+
+  return await db
+    .update(folderTable)
+    .set({ name })
+    .where(eq(folderTable.id, folderId))
     .returning()
     .get();
 }
