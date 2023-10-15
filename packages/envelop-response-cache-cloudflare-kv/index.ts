@@ -11,9 +11,9 @@ export type KvCacheConfig = {
    */
   ctx: ExecutionContext;
   /**
-   * The maximum TTL that can be set for a cache entry (in seconds)
+   * The maximum TTL that can be set for a cache entry (in milliseconds)
    */
-  maxTtl?: number;
+  maxTtl: number;
   /**
    * A prefix that should be added to all cache keys
    */
@@ -31,21 +31,22 @@ export type KvCacheConfig = {
  */
 export function createKvCache(config: KvCacheConfig): Cache {
   const buildOperationKey = (id: string | number) =>
-    `${`${config.keyPrefix}:` ?? ''}operation:${id}`;
+    `${config.keyPrefix ? `${config.keyPrefix}:` : ''}operation:${id}`;
+
   const buildEntityKey = (typename: string, id?: string | number) => {
     if (id) {
-      return `${`${config.keyPrefix}:` ?? ''}entity:${typename}:${id}`;
+      return `${config.keyPrefix ? `${config.keyPrefix}:` : ''}entity:${typename}:${id}`;
     }
-    return `${`${config.keyPrefix}:` ?? ''}entity:${typename}`;
+    return `${config.keyPrefix ? `${config.keyPrefix}:` : ''}entity:${typename}`;
   };
+
   const buildEntityTypenameKey = (typename: string) => {
-    return `${`${config.keyPrefix}:` ?? ''}entity:${typename}`;
+    return `${config.keyPrefix ? `${config.keyPrefix}:` : ''}entity:${typename}`;
   };
 
   const putCacheFunction = async (...args: Parameters<Cache['set']>) => {
     const [id, data, entities, ttl] = args;
-    console.log('Put invoked with ', JSON.stringify(args));
-    const expirationTtlInSeconds = Math.max(Math.min(config.maxTtl ?? Infinity, ttl), 60);
+    const expirationTtlInSeconds = Math.max(Math.min(config.maxTtl / 1000, ttl / 1000), 60);
     const operationKey = buildOperationKey(id);
     const kvPromises: Promise<unknown>[] = [];
 
@@ -59,7 +60,6 @@ export function createKvCache(config: KvCacheConfig): Cache {
     // Store connections between the entities and the operation key
     // TODO: this logic will not work at scale due to the eventually consistent nature of KV. We need to use DurableObjects to synchronize this.
     for (const entity of entities) {
-      console.log('linking entity', entity);
       const entityKey = buildEntityKey(entity.typename, entity.id);
       const existingEntityMap = await config.KV.get<string[]>(entityKey, 'json');
       const entityMap = existingEntityMap ?? [];
@@ -79,10 +79,8 @@ export function createKvCache(config: KvCacheConfig): Cache {
   const invalidateCacheFunction = async (...args: Parameters<Cache['invalidate']>) => {
     const [entities] = args;
     const kvPromises: Promise<unknown>[] = [];
-    console.log('Invalidate invoked with ', JSON.stringify(args));
 
     for (const entity of entities) {
-      console.log('invalidating entity ', entity);
       if (!entity.id) {
         // Invalidate all operations that are connected to this entity
         const entityKey = buildEntityTypenameKey(entity.typename);
@@ -133,9 +131,10 @@ export function createKvCache(config: KvCacheConfig): Cache {
 
   const cache: Cache = {
     async get(id: string) {
-      console.log('Get invoked with ', JSON.stringify(id));
-      const kvResponse = await config.KV.get<ExecutionResult>(id, 'json');
-      return kvResponse;
+      const kvResponse = await config.KV.get(buildOperationKey(id), 'text');
+      if (kvResponse) {
+        return JSON.parse(kvResponse) as ExecutionResult;
+      }
     },
 
     set(

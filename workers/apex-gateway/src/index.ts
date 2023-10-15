@@ -19,18 +19,23 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // @ts-expect-error - Miniflare needs all exported values to be an object or function
     if (graphqlServer.INIT_ME) {
-      console.log('INIT SERVER');
       graphqlServer = createYoga<Env & ExecutionContext>({
         schema: createSchema({ typeDefs, resolvers }),
         plugins: [
           useResponseCache({
-            cache: createKvCache({ KV: env.GRAPHQL_RESPONSE_CACHE, ctx }),
+            cache: createKvCache({
+              KV: env.GRAPHQL_RESPONSE_CACHE,
+              ctx,
+              keyPrefix: 'graphql',
+              maxTtl: 1000 * 60 * 60 * 24 * 7, // 1 week
+            }),
             session: () => null,
             includeExtensionMetadata: true,
+            ttl: 1000 * 10, // 10 seconds
           }),
         ],
       });
     }
-    return graphqlServer.fetch(request, env, ctx);
+    return await graphqlServer.fetch(request, env, ctx);
   },
 };
