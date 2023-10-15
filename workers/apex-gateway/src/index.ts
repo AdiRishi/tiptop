@@ -32,6 +32,7 @@ export default {
             session: () => null,
             includeExtensionMetadata: true,
             ttl: 1000 * 10, // 10 seconds
+            shouldCacheResult: () => false,
           }),
         ],
       });

@@ -1,1 +1,15 @@
-/Users/arishi/personal/tiptop/.eslintignore
+node_modules
+.nuxt
+.output
+.turbo
+assets
+functions/*.js
+functions/*.js.*
+public
+dist
+.react-email
+playwright-report
+.next
+.cache
+turbo/generators/templates
+**/*.generated.ts

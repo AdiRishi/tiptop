@@ -1,5 +1,5 @@
 import { sqliteTable, integer, text, index, AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
-import { InferSelectModel, InferInsertModel } from 'drizzle-orm';
+import { relations, InferSelectModel, InferInsertModel } from 'drizzle-orm';
 import { dateTime, dateTimeDefaultSQL } from './drizzle-types';
 
 export const folderTable = sqliteTable(
@@ -19,6 +19,16 @@ export const folderTable = sqliteTable(
 );
 export type FolderInsertType = InferInsertModel<typeof folderTable>;
 export type FolderSelectType = InferSelectModel<typeof folderTable>;
+export const folderRelations = relations(folderTable, ({ one, many }) => ({
+  parent: one(folderTable, {
+    fields: [folderTable.parentId],
+    references: [folderTable.id],
+    relationName: 'parent',
+  }),
+  children: many(folderTable, {
+    relationName: 'parent',
+  }),
+}));
 
 export const assetTable = sqliteTable(
   'asset',
@@ -47,6 +57,21 @@ export const assetTable = sqliteTable(
 );
 export type AssetInsertType = InferInsertModel<typeof assetTable>;
 export type AssetSelectType = InferSelectModel<typeof assetTable>;
+export const assetRelations = relations(assetTable, ({ one, many }) => ({
+  folder: one(folderTable, {
+    fields: [assetTable.folderId],
+    references: [folderTable.id],
+    relationName: 'folder',
+  }),
+  latestVersion: one(assetVersionTable, {
+    fields: [assetTable.latestVersionId],
+    references: [assetVersionTable.id],
+    relationName: 'latestVersion',
+  }),
+  versions: many(assetVersionTable, {
+    relationName: 'asset',
+  }),
+}));
 
 export const assetVersionTable = sqliteTable(
   'asset_version',
@@ -69,6 +94,16 @@ export const assetVersionTable = sqliteTable(
 );
 export type AssetVersionInsertType = InferInsertModel<typeof assetVersionTable>;
 export type AssetVersionSelectType = InferSelectModel<typeof assetVersionTable>;
+export const assetVersionRelations = relations(assetVersionTable, ({ one, many }) => ({
+  asset: one(assetTable, {
+    fields: [assetVersionTable.assetId],
+    references: [assetTable.id],
+    relationName: 'asset',
+  }),
+  metafields: many(metafieldTable, {
+    relationName: 'assetVersion',
+  }),
+}));
 
 export const metafieldTable = sqliteTable(
   'metafield',
@@ -93,3 +128,10 @@ export const metafieldTable = sqliteTable(
 );
 export type MetafieldInsertType = InferInsertModel<typeof metafieldTable>;
 export type MetafieldSelectType = InferSelectModel<typeof metafieldTable>;
+export const metafieldRelations = relations(metafieldTable, ({ one }) => ({
+  assetVersion: one(assetVersionTable, {
+    fields: [metafieldTable.assetVersionId],
+    references: [assetVersionTable.id],
+    relationName: 'assetVersion',
+  }),
+}));
