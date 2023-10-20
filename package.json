@@ -1,7 +1,10 @@
 {
   "name": "tiptop",
-  "packageManager": "pnpm@8.9.0",
   "private": true,
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  },
   "scripts": {
     "build": "dotenv -- turbo run build",
     "dev": "dotenv -- turbo run dev",
@@ -12,11 +15,11 @@
     "gen": "dotenv -- turbo gen"
   },
   "devDependencies": {
-    "@turbo/gen": "^1.10.15",
+    "@turbo/gen": "^1.10.16",
     "dotenv-cli": "^7.3.0",
     "eslint-config-tiptop-base": "workspace:*",
     "prettier": "^3.0.3",
     "tsconfig": "workspace:*",
-    "turbo": "^1.10.15"
+    "turbo": "^1.10.16"
   }
 }
