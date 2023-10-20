@@ -1,0 +1,15 @@
+name = "test-graphql-worker"
+main = "src/index.ts"
+compatibility_date = "2023-07-04"
+usage_model = 'bundled'
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+ENVIRONMENT = 'production'
+
+[[kv_namespaces]]
+binding = "GRAPHQL_RESPONSE_CACHE"
+id = "<ignored>"
+preview_id = "<ignored>"
+

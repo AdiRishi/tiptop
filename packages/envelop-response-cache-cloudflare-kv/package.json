@@ -6,8 +6,12 @@
   "main": "index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.js,.cjs,.mjs --fix"
+    "lint": "eslint . --ext .ts,.js,.cjs,.mjs --fix",
+    "test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 vitest run --coverage"
   },
+  "files": [
+    "index.ts"
+  ],
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231016.0",
     "@envelop/response-cache": "^6.0.0",
