@@ -5,9 +5,14 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@re
 import { withSentry } from '@sentry/remix';
 import { ThemeProvider } from './components/ui/theme-provider';
 
+// devtool
+import rdtStylesheet from 'remix-development-tools/index.css';
+import { withDevTools } from 'remix-development-tools';
+
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: tailwindStyles },
   ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
+  { rel: 'stylesheet', href: rdtStylesheet },
 ];
 
 const App = function App() {
@@ -31,4 +36,4 @@ const App = function App() {
   );
 };
 
-export default withSentry(App);
+export default withSentry(withDevTools(App));
