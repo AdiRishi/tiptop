@@ -1,8 +1,8 @@
 import { test, expect, beforeEach } from 'vitest';
 import { ExecutionResult } from 'graphql';
 import type { Cache } from '@envelop/response-cache';
-import { createKvCache, type KvCacheConfig } from './index';
-import { buildOperationKey } from './cacheKey';
+import { createKvCache, type KvCacheConfig } from '../index';
+import { buildOperationKey } from '../cacheKey';
 
 const describe = setupMiniflareIsolatedStorage();
 
@@ -11,7 +11,7 @@ type Env = {
   GRAPHQL_RESPONSE_CACHE: KVNamespace;
 };
 
-describe('@envelop/response-cache-cloudflare-kv', () => {
+describe('@envelop/response-cache-cloudflare-kv integration tests', () => {
   let env: Env;
   let config: KvCacheConfig;
   let maxTtl: number;
@@ -36,8 +36,13 @@ describe('@envelop/response-cache-cloudflare-kv', () => {
     cache = createKvCache(config);
   });
 
-  test('basic set() and get() usage', async () => {
-    await cache.set(dataKey, dataValue, [], maxTtl);
+  test('should work with a basic set() and get()', async () => {
+    await cache.set(
+      dataKey,
+      dataValue,
+      [{ typename: 'User' }, { typename: 'User', id: 1 }, { typename: 'User', id: 2 }],
+      maxTtl
+    );
     await getMiniflareWaitUntil(executionContext);
 
     const result = await cache.get(dataKey);
@@ -49,8 +54,27 @@ describe('@envelop/response-cache-cloudflare-kv', () => {
     expect(JSON.parse(operationValue!)).toEqual(dataValue);
   });
 
-  test('get() on a non-existent key', async () => {
+  test('should return null when calling get() on a non-existent key', async () => {
     const result = await cache.get(dataKey);
     expect(result).toBeUndefined();
+  });
+
+  test('should return null when calling get() on an invalidated key', async () => {
+    await cache.set(
+      dataKey,
+      dataValue,
+      [{ typename: 'User' }, { typename: 'User', id: 1 }, { typename: 'User', id: 2 }],
+      maxTtl
+    );
+    await getMiniflareWaitUntil(executionContext);
+
+    await cache.invalidate([{ typename: 'User' }]);
+    await getMiniflareWaitUntil(executionContext);
+
+    const result = await cache.get(dataKey);
+    expect(result).toBeUndefined();
+
+    const allKeys = await config.KV.list();
+    expect(allKeys.keys.length).toEqual(0);
   });
 });

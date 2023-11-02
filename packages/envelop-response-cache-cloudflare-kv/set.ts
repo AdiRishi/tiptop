@@ -14,12 +14,6 @@ export async function set(
   ttl: number,
   config: KvCacheConfig
 ): Promise<void> {
-  void id;
-  void data;
-  void entities;
-  void ttl;
-  void config;
-
   const ttlInSeconds = Math.max(Math.floor(ttl / 1000), 60); // KV TTL must be at least 60 seconds
   const operationKey = buildOperationKey(id, config.keyPrefix);
   const operationKeyWithoutPrefix = buildOperationKey(id);

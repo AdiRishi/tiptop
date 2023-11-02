@@ -43,10 +43,10 @@ export function createKvCache(config: KvCacheConfig): Cache {
         type: 'text',
         cacheTtl: ttlInSeconds,
       });
-      console.log('reading key ', buildOperationKey(id, config.keyPrefix), 'got', kvResponse);
       if (kvResponse) {
         return JSON.parse(kvResponse) as ExecutionResult;
       }
+      return undefined;
     },
 
     set(
