@@ -1,3 +1,4 @@
 {
   "extends": "tsconfig/cloudflare-worker.json",
+  "exclude": ["node_modules", "coverage", ".turbo", "dist"]
 }

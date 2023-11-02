@@ -33,7 +33,7 @@ export async function updateFolder(
   identifier: { path?: string; id?: number },
   updateData: { name?: string | null; parentPath?: string | null; parentId?: number | null },
   env: Env
-) {
+): Promise<FolderSelectType> {
   const db = getDrizzleClient(env);
 
   const folderWithParent = await getFolderWithParent(identifier, env);

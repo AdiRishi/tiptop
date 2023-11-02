@@ -27,11 +27,10 @@ export default {
               KV: env.GRAPHQL_RESPONSE_CACHE,
               ctx,
               keyPrefix: 'graphql',
-              maxTtl: 1000 * 60 * 60 * 24 * 7, // 1 week
             }),
             session: () => null,
             includeExtensionMetadata: true,
-            ttl: 1000 * 10, // 10 seconds
+            ttl: 1000 * 60 * 1, // 1 minute
             shouldCacheResult: () => false,
           }),
         ],
