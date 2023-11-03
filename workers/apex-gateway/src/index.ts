@@ -23,6 +23,7 @@ export default {
         schema: createSchema({ typeDefs, resolvers }),
         plugins: [
           useResponseCache({
+            // @ts-expect-error - https://github.com/dotansimha/graphql-yoga/issues/3048
             cache: createKvCache({
               KV: env.GRAPHQL_RESPONSE_CACHE,
               ctx,
