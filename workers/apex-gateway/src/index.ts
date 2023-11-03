@@ -1,5 +1,5 @@
 import { createSchema, createYoga, YogaInitialContext } from 'graphql-yoga';
-import { useResponseCache } from '@envelop/response-cache';
+import { useResponseCache } from '@graphql-yoga/plugin-response-cache';
 import { createKvCache } from 'envelop-response-cache-cloudflare-kv';
 import { typeDefs } from './graphql-schema/typeDefs.generated';
 import { resolvers } from './graphql-schema/resolvers.generated';
@@ -31,7 +31,7 @@ export default {
             session: () => null,
             includeExtensionMetadata: true,
             ttl: 1000 * 60 * 1, // 1 minute
-            shouldCacheResult: () => false,
+            enabled: () => true,
           }),
         ],
       });
