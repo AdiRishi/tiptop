@@ -13,3 +13,4 @@ playwright-report
 .cache
 turbo/generators/templates
 **/*.generated.ts
+coverage
