@@ -9,8 +9,8 @@ export default function Index() {
   return (
     <div className="flex flex-auto h-full overflow-hidden">
       <div className="h-full min-w-[320px] w-96">
-        <div className="flex flex-col h-full p-4">
-          <div className="border-b border-y border-gray-800/50">
+        <div className="flex flex-col h-full">
+          <div className="border-b border-y border-gray-800/50 p-4">
             <p>Studio</p>
             <p>The ultimate CMS for modern developers</p>
           </div>
@@ -19,7 +19,7 @@ export default function Index() {
               <ul className="flex flex-col">
                 <li>
                   <a
-                    href="/editor-studio"
+                    href="/editor"
                     className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer hover:bg-gray-800/50"
                   >
                     <div className="relative flex p-1 border rounded-md">
