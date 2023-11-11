@@ -1,9 +1,10 @@
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import type { LinksFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
-import tailwindStyles from './tailwind.css';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import { withSentry } from '@sentry/remix';
+import tailwindStyles from './tailwind.css';
 import { ThemeProvider } from './components/ui/theme-provider';
+import { Layout } from './layouts/default';
 
 // devtool
 import rdtStylesheet from 'remix-development-tools/index.css';
@@ -25,8 +26,10 @@ const App = function App() {
         <Links />
       </head>
       <body>
-        <ThemeProvider defaultTheme="light">
-          <Outlet />
+        <ThemeProvider defaultTheme="dark">
+          <Layout>
+            <Outlet />
+          </Layout>
         </ThemeProvider>
         <ScrollRestoration />
         <Scripts />
