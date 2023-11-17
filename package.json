@@ -18,7 +18,7 @@
     "@turbo/gen": "^1.10.16",
     "dotenv-cli": "^7.3.0",
     "eslint-config-tiptop-base": "workspace:*",
-    "prettier": "^3.0.3",
+    "prettier": "^3.1.0",
     "tsconfig": "workspace:*",
     "turbo": "^1.10.16"
   }
