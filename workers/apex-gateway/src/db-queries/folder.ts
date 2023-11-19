@@ -1,7 +1,7 @@
-import { eq } from 'drizzle-orm';
 import { Env } from '..';
 import { getDrizzleClient } from '../db-schema/db-client';
 import { FolderSelectType, folderTable } from '../db-schema/schema';
+import { eq } from 'drizzle-orm';
 
 export async function getFolderById(folderId: number, env: Env): Promise<FolderSelectType> {
   const db = getDrizzleClient(env);

@@ -1,6 +1,6 @@
-import type { CacheEntityRecord } from '@envelop/response-cache';
 import type { KvCacheConfig } from '.';
 import { buildEntityKey } from './cacheKey';
+import type { CacheEntityRecord } from '@envelop/response-cache';
 
 export async function invalidate(
   entities: Iterable<CacheEntityRecord>,

@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
 import { buildOperationKey, buildEntityKey } from '../cacheKey';
+import { describe, test, expect } from 'vitest';
 
 describe('cacheKey.spec.ts', () => {
   describe('buildOperationKey', () => {

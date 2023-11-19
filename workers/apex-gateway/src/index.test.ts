@@ -1,8 +1,8 @@
+import { Env } from '.';
+import serverModule from './index';
+import { describe, expect, it, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
 import { unstable_dev } from 'wrangler';
 import type { UnstableDevWorker } from 'wrangler';
-import { describe, expect, it, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
-import serverModule from './index';
-import { Env } from '.';
 
 describe('apex-gateway worker', () => {
   let worker: UnstableDevWorker;

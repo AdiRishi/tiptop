@@ -1,9 +1,9 @@
+import type { FolderResolvers } from '../../types.generated';
 import path from 'node:path';
 import {
   getFolderByPath as dbQueryGetFolderByPath,
   getSubfoldersById as dbQueryGetSubfoldersById,
 } from '~/db-queries/folder';
-import type { FolderResolvers } from '../../types.generated';
 
 export const Folder: FolderResolvers = {
   /**

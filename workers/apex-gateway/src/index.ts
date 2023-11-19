@@ -1,8 +1,8 @@
-import { createSchema, createYoga, YogaInitialContext } from 'graphql-yoga';
+import { resolvers } from './graphql-schema/resolvers.generated';
+import { typeDefs } from './graphql-schema/typeDefs.generated';
 import { useResponseCache } from '@graphql-yoga/plugin-response-cache';
 import { createKvCache } from 'envelop-response-cache-cloudflare-kv';
-import { typeDefs } from './graphql-schema/typeDefs.generated';
-import { resolvers } from './graphql-schema/resolvers.generated';
+import { createSchema, createYoga, YogaInitialContext } from 'graphql-yoga';
 
 export type Env = {
   ENVIRONMENT: 'testing' | 'development' | 'production';

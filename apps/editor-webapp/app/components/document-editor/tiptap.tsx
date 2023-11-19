@@ -1,6 +1,6 @@
+import MenuBar from './menu-bar';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import MenuBar from './menu-bar';
 
 const extensions = [StarterKit];
 

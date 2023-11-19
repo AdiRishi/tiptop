@@ -1,7 +1,7 @@
-import type { CacheEntityRecord } from '@envelop/response-cache';
-import type { ExecutionResult } from 'graphql';
 import type { KvCacheConfig } from '.';
 import { buildEntityKey, buildOperationKey } from './cacheKey';
+import type { CacheEntityRecord } from '@envelop/response-cache';
+import type { ExecutionResult } from 'graphql';
 
 export async function set(
   /** id/hash of the operation */

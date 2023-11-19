@@ -1,5 +1,4 @@
 import { Env } from '..';
-import { eq } from 'drizzle-orm';
 import { getDrizzleClient } from '../db-schema/db-client';
 import {
   AssetSelectType,
@@ -7,6 +6,7 @@ import {
   assetTable,
   assetVersionTable,
 } from '../db-schema/schema';
+import { eq } from 'drizzle-orm';
 
 export async function createRichTextAsset(
   assetData: { folderId: number; editorName: string; contentJson: Record<string, unknown> },

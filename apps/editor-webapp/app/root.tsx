@@ -1,14 +1,13 @@
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { ThemeProvider } from './components/ui/theme-provider';
+import tailwindStyles from './global-css/tailwind.css';
+import { Layout } from './layouts/default';
 import type { LinksFunction } from '@remix-run/cloudflare';
 import { cssBundleHref } from '@remix-run/css-bundle';
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import { withSentry } from '@sentry/remix';
-import tailwindStyles from './global-css/tailwind.css';
-import { ThemeProvider } from './components/ui/theme-provider';
-import { Layout } from './layouts/default';
-
+import { withDevTools } from 'remix-development-tools';
 // devtool
 import rdtStylesheet from 'remix-development-tools/index.css';
-import { withDevTools } from 'remix-development-tools';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: tailwindStyles },

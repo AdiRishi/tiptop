@@ -3,12 +3,10 @@
  * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
  * For more information, see https://remix.run/file-conventions/entry.client
  */
-
 import { RemixBrowser, useLocation, useMatches } from '@remix-run/react';
+import * as Sentry from '@sentry/remix';
 import { startTransition, StrictMode, useEffect } from 'react';
 import { hydrateRoot } from 'react-dom/client';
-
-import * as Sentry from '@sentry/remix';
 
 Sentry.init({
   dsn: undefined, // TODO set DSN

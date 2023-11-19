@@ -1,3 +1,4 @@
+import type { QueryResolvers } from './../../../types.generated';
 import { GraphQLError } from 'graphql';
 import {
   getAssetByGuid as dbQueryGetAssetByGuid,
@@ -9,7 +10,6 @@ import {
   FolderNotFoundException,
   getFolderById as dbQueryGetFolderById,
 } from '~/db-queries/folder';
-import type { QueryResolvers } from './../../../types.generated';
 
 export const richTextAssetByGuid: NonNullable<QueryResolvers['richTextAssetByGuid']> = async (
   _parent,

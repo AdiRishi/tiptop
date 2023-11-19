@@ -1,11 +1,11 @@
+import type { MutationResolvers } from './../../../types.generated';
+import { GraphQLError } from 'graphql';
+import { createRichTextAsset as dbMutationCreateRichTextAsset } from '~/db-mutations/asset';
+import { unwrapRichTextContent } from '~/db-queries/asset';
 import {
   FolderNotFoundException,
   getFolderByPath as dbQueryGetFolderByPath,
 } from '~/db-queries/folder';
-import { createRichTextAsset as dbMutationCreateRichTextAsset } from '~/db-mutations/asset';
-import type { MutationResolvers } from './../../../types.generated';
-import { unwrapRichTextContent } from '~/db-queries/asset';
-import { GraphQLError } from 'graphql';
 
 export const createRichTextAsset: NonNullable<MutationResolvers['createRichTextAsset']> = async (
   _parent,

@@ -1,10 +1,10 @@
+import type { MutationResolvers } from './../../../types.generated';
 import { GraphQLError } from 'graphql';
 import { updateFolder as dbMutationUpdateFolder } from '~/db-mutations/folder';
 import {
   FolderNotFoundException,
   getFolderById as dbQueryGetFolderById,
 } from '~/db-queries/folder';
-import type { MutationResolvers } from './../../../types.generated';
 
 export const updateFolderById: NonNullable<MutationResolvers['updateFolderById']> = async (
   _parent,

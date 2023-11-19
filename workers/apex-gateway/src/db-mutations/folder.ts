@@ -1,9 +1,9 @@
-import path from 'node:path';
-import { eq } from 'drizzle-orm';
 import { Env } from '..';
 import { getFolderById, getFolderWithParent } from '../db-queries/folder';
 import { getDrizzleClient } from '../db-schema/db-client';
 import { FolderSelectType, folderTable } from '../db-schema/schema';
+import { eq } from 'drizzle-orm';
+import path from 'node:path';
 
 export async function createFolder(
   folderData: { name: string; parentId: number },

@@ -1,6 +1,6 @@
-import { sqliteTable, integer, text, index, AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
-import { relations, InferSelectModel, InferInsertModel } from 'drizzle-orm';
 import { dateTime, dateTimeDefaultSQL } from './drizzle-types';
+import { relations, InferSelectModel, InferInsertModel } from 'drizzle-orm';
+import { sqliteTable, integer, text, index, AnySQLiteColumn } from 'drizzle-orm/sqlite-core';
 
 export const folderTable = sqliteTable(
   'folder',

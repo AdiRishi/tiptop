@@ -1,7 +1,7 @@
+import type { MutationResolvers } from './../../../types.generated';
 import { GraphQLError } from 'graphql';
 import { updateFolder as dbMutationUpdateFolder } from '~/db-mutations/folder';
 import { FolderNotFoundException } from '~/db-queries/folder';
-import type { MutationResolvers } from './../../../types.generated';
 
 export const updateFolderByPath: NonNullable<MutationResolvers['updateFolderByPath']> = async (
   _parent,

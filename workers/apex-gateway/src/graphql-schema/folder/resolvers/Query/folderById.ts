@@ -1,8 +1,8 @@
+import type { QueryResolvers } from '../../../types.generated';
 import {
   FolderNotFoundException,
   getFolderById as dbQueryGetFolderById,
 } from '~/db-queries/folder';
-import type { QueryResolvers } from '../../../types.generated';
 
 export const folderById: NonNullable<QueryResolvers['folderById']> = async (_parent, arg, ctx) => {
   const folderId = parseInt(arg.id);

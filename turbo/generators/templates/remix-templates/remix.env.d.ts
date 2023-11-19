@@ -1,7 +1,6 @@
 /// <reference types="@remix-run/dev" />
 import '@remix-run/cloudflare';
 /// <reference types="@cloudflare/workers-types" />
-
 import type { AppLoadContext as OriginalAppLoadContext } from '@remix-run/cloudflare';
 
 declare global {
