@@ -12,7 +12,9 @@ declare global {
   /**
    * Declare expected Env parameter in fetch handler.
    */
-  interface Env {}
+  interface Env {
+    BACKEND_API_URL: string;
+  }
 }
 
 declare module '@remix-run/cloudflare' {

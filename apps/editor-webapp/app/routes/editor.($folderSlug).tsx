@@ -1,7 +1,26 @@
-import { Link, Outlet } from '@remix-run/react';
-import { Folder, ChevronLeft } from 'lucide-react';
+import { redirect, type LoaderFunctionArgs } from '@remix-run/cloudflare';
+import { Link, Outlet, useLoaderData } from '@remix-run/react';
+import { Folder, ChevronLeft, FileText } from 'lucide-react';
+import { createGraphqlClient } from '~/graphql/gql-client.server';
+import { AssetBrowserQuery } from '~/graphql/queries.server';
+
+export const loader = async (args: LoaderFunctionArgs) => {
+  const folderSlug = args.params.folderSlug || '/';
+  console.log('folder slug is ', folderSlug);
+
+  const gql = createGraphqlClient(args.context.env);
+  const data = await gql.request(AssetBrowserQuery, { folderSlug });
+  if (!data.folderByPath) {
+    return redirect('/editor');
+  }
+  return {
+    folderData: data.folderByPath,
+  };
+};
 
 export default function EditorLayout() {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <div className="flex flex-auto h-full overflow-hidden">
       <div className="h-full min-w-[320px] w-96">
@@ -17,7 +36,7 @@ export default function EditorLayout() {
                 </button>
               </Link>
               <div className="flex flex-col">
-                <p>Editor</p>
+                {data.folderData.path === '/' ? <p>Editor</p> : <p>{data.folderData.name}</p>}
                 <p>Browse and edit your content files.</p>
               </div>
             </div>
@@ -25,26 +44,14 @@ export default function EditorLayout() {
           <div className="flex-1 overflow-y-auto">
             <div className="relative flex flex-col h-full">
               <ul className="flex flex-col">
-                <li className="px-4 py-2">
-                  <div className="flex items-center justify-between flex-1">
-                    <div className="flex items-center flex-1 gap-3">
-                      <div className="relative flex p-1 bg-gray-800 border border-gray-700 rounded-md">
-                        <Folder />
-                      </div>
-                      <span className="min-w-0 truncate">awesome</span>
-                    </div>
-                  </div>
-                </li>
-                <li className="px-4 py-2">
-                  <div className="flex items-center justify-between flex-1">
-                    <div className="flex items-center flex-1 gap-3">
-                      <div className="relative flex p-1 bg-gray-800 border border-gray-700 rounded-md">
-                        <Folder />
-                      </div>
-                      <span className="min-w-0 truncate">awesome</span>
-                    </div>
-                  </div>
-                </li>
+                {data.folderData.children.map((child) => (
+                  <RenderBrowserItem
+                    key={child.id}
+                    itemType="Folder"
+                    name={child.name}
+                    slug={child.path}
+                  />
+                ))}
               </ul>
             </div>
           </div>
@@ -54,5 +61,30 @@ export default function EditorLayout() {
         <Outlet />
       </div>
     </div>
+  );
+}
+
+function RenderBrowserItem({
+  itemType,
+  name,
+  slug,
+}: {
+  itemType: 'Folder' | 'Asset';
+  name: string;
+  slug: string;
+}) {
+  return (
+    <li className="px-4 py-2">
+      <Link to={`/editor${slug}`}>
+        <div className="flex items-center justify-between flex-1">
+          <div className="flex items-center flex-1 gap-3">
+            <div className="relative flex p-1 bg-gray-800 border border-gray-700 rounded-md">
+              {itemType === 'Folder' ? <Folder /> : <FileText />}
+            </div>
+            <span className="min-w-0 truncate">{name}</span>
+          </div>
+        </div>
+      </Link>
+    </li>
   );
 }
