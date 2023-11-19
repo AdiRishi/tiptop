@@ -9,7 +9,9 @@
     "dev": "remix dev --manual -c \"pnpm run preview\"",
     "preview": "wrangler pages dev --compatibility-date=2023-09-14 ./public",
     "typecheck": "tsc --incremental",
-    "lint": "eslint . --ext .ts,.cjs,.mjs,.tsx,.jsx --fix"
+    "lint": "eslint . --ext .ts,.cjs,.mjs,.tsx,.jsx --fix",
+    "codegen:graphql": "graphql-codegen --config graphql-codegen.ts",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@cloudflare/pages-plugin-sentry": "^1.1.1",

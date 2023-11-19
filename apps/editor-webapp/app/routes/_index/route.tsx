@@ -1,4 +1,5 @@
 import type { MetaFunction } from '@remix-run/cloudflare';
+import { Link } from '@remix-run/react';
 import { Folder, Image as ImageIcon } from 'lucide-react';
 
 export const meta: MetaFunction = () => {
@@ -18,8 +19,8 @@ export default function Index() {
             <div className="relative h-full">
               <ul className="flex flex-col">
                 <li>
-                  <a
-                    href="/editor"
+                  <Link
+                    to="/editor"
                     className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer hover:bg-gray-800/50"
                   >
                     <div className="relative flex p-1 border rounded-md">
@@ -29,11 +30,11 @@ export default function Index() {
                       <p className="text-base capitalize truncate">Editor</p>
                       <p className=" truncate">Browse and edit your content files.</p>
                     </div>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="/dsd"
+                  <Link
+                    to="/dsd"
                     className="flex items-center justify-between gap-4 px-4 py-3 cursor-pointer hover:bg-gray-800/50"
                   >
                     <div className="relative flex p-1 border rounded-md">
@@ -43,7 +44,7 @@ export default function Index() {
                       <p className="text-base capitalize truncate">Media</p>
                       <p className=" truncate">Store and manage your medias</p>
                     </div>
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
