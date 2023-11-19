@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, and } from 'drizzle-orm';
 import { Env } from '..';
 import { getDrizzleClient } from '~/db-schema/db-client';
 import {
@@ -38,8 +38,9 @@ export async function getAssetById(
     assetVersion = await db
       .select()
       .from(assetVersionTable)
-      .where(eq(assetVersionTable.assetId, asset.id))
-      .where(eq(assetVersionTable.versionSlug, versionSlug))
+      .where(
+        and(eq(assetVersionTable.assetId, asset.id), eq(assetVersionTable.versionSlug, versionSlug))
+      )
       .get();
   }
   if (!assetVersion) {
@@ -66,8 +67,9 @@ export async function getAssetByGuid(guid: string, versionSlug = 'latest', env: 
     assetVersion = await db
       .select()
       .from(assetVersionTable)
-      .where(eq(assetVersionTable.assetId, asset.id))
-      .where(eq(assetVersionTable.versionSlug, versionSlug))
+      .where(
+        and(eq(assetVersionTable.assetId, asset.id), eq(assetVersionTable.versionSlug, versionSlug))
+      )
       .get();
   }
   if (!assetVersion) {
