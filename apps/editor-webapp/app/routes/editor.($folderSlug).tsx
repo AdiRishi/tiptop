@@ -1,15 +1,21 @@
 import { redirect, type LoaderFunctionArgs } from '@remix-run/cloudflare';
 import { Link, Outlet, useLoaderData } from '@remix-run/react';
 import { Folder, ChevronLeft, FileText } from 'lucide-react';
+import { dirname } from 'node:path';
 import { createGraphqlClient } from '~/graphql/gql-client.server';
 import { AssetBrowserQuery } from '~/graphql/queries.server';
 
 export const loader = async (args: LoaderFunctionArgs) => {
-  const folderSlug = args.params.folderSlug || '/';
-  console.log('folder slug is ', folderSlug);
+  let folderPath = args.params.folderSlug;
+  if (folderPath) {
+    folderPath = '/' + slugToPath(decodeURIComponent(folderPath));
+  } else {
+    folderPath = '/';
+  }
+  console.log('folder path is ', folderPath);
 
   const gql = createGraphqlClient(args.context.env);
-  const data = await gql.request(AssetBrowserQuery, { folderSlug });
+  const data = await gql.request(AssetBrowserQuery, { folderSlug: folderPath });
   if (!data.folderByPath) {
     return redirect('/editor');
   }
@@ -44,12 +50,19 @@ export default function EditorLayout() {
           <div className="flex-1 overflow-y-auto">
             <div className="relative flex flex-col h-full">
               <ul className="flex flex-col">
+                {data.folderData.path !== '/' ? (
+                  <RenderBrowserItem
+                    itemType="Folder"
+                    name="../"
+                    path={dirname(data.folderData.path)}
+                  />
+                ) : null}
                 {data.folderData.children.map((child) => (
                   <RenderBrowserItem
                     key={child.id}
                     itemType="Folder"
                     name={child.name}
-                    slug={child.path}
+                    path={child.path}
                   />
                 ))}
               </ul>
@@ -67,15 +80,15 @@ export default function EditorLayout() {
 function RenderBrowserItem({
   itemType,
   name,
-  slug,
+  path,
 }: {
   itemType: 'Folder' | 'Asset';
   name: string;
-  slug: string;
+  path: string;
 }) {
   return (
     <li className="px-4 py-2">
-      <Link to={`/editor${slug}`}>
+      <Link to={`/editor/${encodeURIComponent(pathToSlug(path))}`}>
         <div className="flex items-center justify-between flex-1">
           <div className="flex items-center flex-1 gap-3">
             <div className="relative flex p-1 bg-gray-800 border border-gray-700 rounded-md">
@@ -87,4 +100,18 @@ function RenderBrowserItem({
       </Link>
     </li>
   );
+}
+
+function slugToPath(slug: string) {
+  return slug.replace(/\|/g, '/');
+}
+
+function pathToSlug(path: string) {
+  // Remove leading slash if it exists
+  if (path.startsWith('/')) {
+    path = path.substring(1);
+  }
+
+  // Replace all remaining slashes with '|'
+  return path.replace(/\//g, '|');
 }

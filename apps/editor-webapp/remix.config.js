@@ -17,4 +17,9 @@ export default {
   serverNodeBuiltinsPolyfill: {
     modules: {},
   },
+  browserNodeBuiltinsPolyfill: {
+    modules: {
+      path: true,
+    },
+  },
 };
